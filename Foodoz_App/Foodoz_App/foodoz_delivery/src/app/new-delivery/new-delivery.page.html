@@ -1,0 +1,109 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            <div class="d-flex ">
+                {{'new_delivery_task' | translate}}
+                <span class="end">({{'order_id' | translate}}{{order_request.order.id}})</span>
+
+                <!--
+                <div class="order_info_button end" (click)="toggleFab()">
+                    <span class="info">
+                        <ion-icon class="zmdi zmdi-shopping-basket ion-text-start"></ion-icon>
+                        {{'order_info' | translate}}
+                    </span>
+                    <span class="cloes">
+                        <ion-icon class="zmdi zmdi-close ion-text-start"></ion-icon>
+                        {{'cloes' | translate}}
+                    </span>
+                </div>
+-->
+            </div>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+    <div #map id="map" class="map">
+        <!-- <ion-spinner></ion-spinner> -->
+    </div>
+    <div #pleaseConnect id="please-connect">
+        <!-- <p>{{'loading' | translate}}</p> -->
+    </div>
+</ion-content>
+
+<ion-footer class="ion-no-border animate__animated animate__fadeInUp">
+    <ion-card>
+        <div class="card_header d-flex">
+
+            <div class="text_box">
+                <h2 class="d-flex">
+                    <ion-icon class="zmdi zmdi-bike ion-text-start"></ion-icon>{{distanceToShow}} {{distance_metric | translate}} <span>&nbsp;({{durationToShow}})</span>
+                </h2>
+            </div>
+
+            <div class="direction end" (click)="navRequest()">
+                <ion-icon class="zmdi zmdi-navigation ion-text-start"></ion-icon>
+                {{'direction' | translate}}
+            </div>
+            <!--
+            <div class="direction end">
+                <ion-icon class="zmdi zmdi-navigation ion-text-start"></ion-icon>
+                {{'direction' | translate}}
+            </div>
+-->
+
+        </div>
+        <div class="delivery_details">
+            <div class="delivery_address animate__animated animate__fadeInUp d-flex">
+                <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon>
+                <div class="text_box">
+                    <h2>{{order_request.order.vendor.name}}</h2>
+                    <p>{{order_request.order.vendor.address}}</p>
+                </div>
+
+                <!--
+                <div class="iocn_box end d-flex">
+                    <ion-icon class="zmdi zmdi-comment-alt-text ion-text-end"></ion-icon>
+                    <ion-icon class="zmdi zmdi-phone ion-text-end end"></ion-icon>
+                </div>
+-->
+            </div>
+            <div class="dotted">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="delivery_address animate__animated animate__fadeInUp d-flex">
+                <ion-icon class="zmdi zmdi-navigation ion-text-start"></ion-icon>
+                <div class="text_box">
+                    <h2>{{order_request.order.user ? order_request.order.user.name : order_request.order.customer_name}}
+                    </h2>
+                    <p *ngIf="order_request.order.address">{{order_request.order.address.formatted_address}}</p>
+                </div>
+
+                <!--
+                <div class="iocn_box end d-flex">
+                    <ion-icon class="zmdi zmdi-phone ion-text-end end"></ion-icon>
+                </div>
+-->
+
+            </div>
+        </div>
+    </ion-card>
+    <ion-row class="animate__animated animate__fadeInUp">
+        <ion-col size="6">
+            <ion-button size="large" shape="full" class="btn" (click)="confirmUpdate('accepted')">
+                {{'accept' | translate}}
+            </ion-button>
+        </ion-col>
+
+        <ion-col size="6">
+            <ion-button size="large" shape="full" class="btn reject" (click)="confirmUpdate('rejected')">
+                {{'reject' | translate}}
+            </ion-button>
+        </ion-col>
+    </ion-row>
+</ion-footer>

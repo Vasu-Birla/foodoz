@@ -1,0 +1,154 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            <div class="search_box d-flex">
+                <ion-searchbar mode="md" class="" searchIcon="hide" debounce="1000"
+                    placeholder="{{'search_here' | translate}}" (ionChange)="onSearchbarChange($event)">
+                </ion-searchbar>
+                <ion-icon class="zmdi zmdi-search ion-text-center end"></ion-icon>
+            </div>
+        </ion-title>
+    </ion-toolbar>
+
+    <ion-segment mode="ios" (ionChange)="segmentChanged()" [(ngModel)]="segment" lines="none" scrollable>
+        <ion-segment-button mode="ios" value="0">
+            <ion-label>{{'items' | translate}}</ion-label>
+        </ion-segment-button>
+        <ion-segment-button mode="ios" value="1">
+            <ion-label>{{'restaurants' | translate}}</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+</ion-header>
+
+<ion-content class="bg_color" fullscreen>
+
+    <ion-slides #slides (ionSlideDidChange)="slideChanged()">
+        <ion-slide class="item-slide">
+            <div class="empty-view " *ngIf="(!vendorWithItems || !vendorWithItems.length)">
+                <div style="text-align:center">
+                    <img class="light_img" src="assets/images/empty_plc_light.png" alt="no offers" />
+                    <img class="dark_img" src="assets/images/empty_plc_dark.png" alt="no offers" />
+                    <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+                    <span style="color:#9E9E9E; font-weight:bold;">
+                        {{(initialStage ? 'initial_search' : (isLoading ? 'loading' : 'empty_results')) | translate}}
+                    </span>
+                </div>
+            </div>
+
+            <ion-list lines="none">
+                <ion-card *ngFor="let vendor of vendorWithItems;let i = index">
+                    <div class="card_header" (click)="navVenDetail(vendor.vendor)">
+                        <h3 class="d-flex"> {{vendor.vendor.name}}
+                            <span class="end">
+                                <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                                {{vendor.vendor.ratings}}
+                            </span>
+                        </h3>
+                        <h4 class="d-flex">
+                            <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon>
+                            <span>{{vendor.vendor.distance_toshow}} | {{vendor.vendor.address}}</span>
+                            <ion-icon class=" zmdi zmdi-chevron-right  ion-text-end end"></ion-icon>
+                        </h4>
+                    </div>
+                    <div class="card_content">
+                        <ion-item *ngFor="let item of vendor.items;let j = index">
+                            <div class="item_inner d-flex">
+                                <div class="img_box center_img">
+                                    <img [src]="item.images[0]" class="crop_img">
+                                </div>
+                                <div class="text_box d-flex">
+                                    <div class="" style="width: 100%;">
+                                        <div style="padding-bottom:10px;" class="d-flex">
+                                            <h3>{{item.title}}</h3>
+                                            <del *ngIf="!item.in_stock" class="end">
+                                                <h6 class="end">{{'add' | translate}}</h6>
+                                            </del>
+                                            <h6 *ngIf="!item.quantity && item.in_stock" class="end"
+                                                (click)="addProCart(item)">
+                                                {{'add' | translate}}
+                                            </h6>
+                                            <p *ngIf="item.quantity > 0 && item.in_stock" class="end">
+                                                <span (click)="removeItem(item)">-</span>
+                                                <strong>{{item.quantity}}</strong>
+                                                <span (click)="addProCart(item)">+</span>
+                                            </p>
+                                        </div>
+
+                                        <h4 class="d-flex">
+                                            <img *ngIf="item.meta && item.meta.food_type == 'veg'"
+                                                src="assets/images/ic_veg.png">
+                                            <img *ngIf="item.meta && item.meta.food_type != 'veg'"
+                                                src="assets/images/ic_nonveg.png">&nbsp;&nbsp;
+                                            <span *ngIf="item.sale_priceToShow"
+                                                class="d-block priceToShow"><s>{{item.priceToShow}}</s>&nbsp;&nbsp;&nbsp;</span>
+                                            <span class="d-block ml-auto">{{item.sale_priceToShow ?
+                                                item.sale_priceToShow : item.priceToShow}}</span>
+
+                                            <span class="customise end"
+                                                *ngIf="item.addon_groups && item.addon_groups.length && item.in_stock"
+                                                (click)="variationSelection(item)">
+                                                {{'customise' | translate}}
+                                            </span>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </ion-item>
+                    </div>
+                </ion-card>
+            </ion-list>
+        </ion-slide>
+
+
+
+        <ion-slide>
+            <div class="empty-view " *ngIf="(!vendors || !vendors.length)">
+                <div style="text-align:center">
+                    <img class="light_img" src="assets/images/empty_provider.png" alt="no offers" />
+                    <img class="dark_img" src="assets/images/empty_provider_dark.png" alt="no offers" />
+                    <ion-spinner *ngIf="isLoadingVendors" name="crescent"></ion-spinner>
+                    <span style="color:#9E9E9E; font-weight:bold;">
+                        {{(initialStage ? 'initial_search' : (isLoadingVendors ? 'loading' : 'empty_results')) |
+                        translate}}
+                    </span>
+                </div>
+            </div>
+            <ion-list lines="none">
+                <ion-item *ngFor="let vendor of vendors" (click)="navVenDetail(vendor)"
+                    class="animate__animated animate__fadeInUp">
+                    <div class="item_inner d-flex">
+                        <div class="img_box center_img">
+                            <img [src]="vendor.image" class="crop_img">
+                        </div>
+                        <div class="text_box">
+                            <h3 class="d-flex">{{vendor.name}}</h3>
+                            <h4>{{vendor.categories_text}}</h4>
+                            <h5 class="d-flex">
+                                <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                                {{vendor.ratings}}
+                            </h5>
+                            <h4 class="d-flex">
+                                <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon>
+                                <span>{{vendor.distance_toshow}} | {{vendor.address}}</span>
+                            </h4>
+                        </div>
+                    </div>
+                </ion-item>
+            </ion-list>
+        </ion-slide>
+    </ion-slides>
+</ion-content>
+
+<ion-footer *ngIf="vendorWithItems && vendorWithItems.length && eComService.getCartItemsCount() > 0 && segment == 0"
+    class="ion-no-border ">
+    <div class="cart_btn" (click)="continue()">
+        <h2 class="d-flex">
+            <img src="assets/images/ic_cart_wt.png">&nbsp; &nbsp; {{eComService.getCartItemsCount()}} {{'items' |
+            translate}} &nbsp;|&nbsp; {{currency_icon}} {{eComService.getCartItemsTotal(true)}}
+            <span class="end">{{'view_cart' | translate}}</span>
+        </h2>
+    </div>
+</ion-footer>

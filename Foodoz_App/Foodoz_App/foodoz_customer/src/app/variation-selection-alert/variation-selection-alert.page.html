@@ -1,0 +1,52 @@
+<!--
+<ion-header>
+  <ion-toolbar>
+    <ion-title>variation-selection</ion-title>
+  </ion-toolbar>
+</ion-header>
+-->
+
+<ion-content fullscreen (click)="dismiss()">
+
+</ion-content>
+<ion-footer class="ion-no-border">
+    <ion-list lines="none">
+        <div class="list_header d-flex animate__animated animate__fadeInUp">
+            <div class="text_box">
+                <h2 class="d-flex">{{product.title}}
+                </h2>
+                <h3 class="d-flex">
+                    <img *ngIf="product.meta.food_type == 'veg'" src="assets/images/ic_veg.png">
+                    <img *ngIf="product.meta.food_type != 'veg'" src="assets/images/ic_nonveg.png">
+                    &nbsp;&nbsp;
+                    <span *ngIf="product.sale_priceToShow"
+                        class="d-block priceToShow"><s>{{product.priceToShow}}</s>&nbsp;&nbsp;&nbsp;</span>
+                    <span class="d-block ml-auto">
+                        {{product.sale_priceToShow ? product.sale_priceToShow : product.priceToShow}}
+                    </span>
+
+                </h3>
+            </div>
+        </div>
+
+        <div class="list_inner">
+            <div class="variation-category animate__animated animate__fadeInUp">
+                <h2>{{'repeat_last_used_customisation' | translate}}</h2>
+                <ion-item class="animate__animated animate__fadeInUp">
+                    <div class="item_inner d-flex">
+                        <h2 *ngFor="let adOn of addOnsExisting" class="d-flex">
+                            {{adOn.title}}
+                            <span class="end">{{adOn.priceToShow}}</span>
+                        </h2>
+                    </div>
+                </ion-item>
+            </div>
+        </div>
+    </ion-list>
+    <div class="btn_box d-flex">
+        <div class="btn_box_inner end  animate__animated animate__fadeInUp">
+            <h6 (click)="actionNew()">{{'i_ll_choose' | translate}}</h6>
+            <h6 (click)="actionOld()">{{'repeat_last' | translate}}</h6>
+        </div>
+    </div>
+</ion-footer>

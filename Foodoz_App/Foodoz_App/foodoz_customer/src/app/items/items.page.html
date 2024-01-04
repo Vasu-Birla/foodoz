@@ -1,0 +1,213 @@
+<div class="main-container">
+    <ion-header>
+        <ion-toolbar>
+            <ion-buttons slot="start" mode="md">
+                <ion-back-button text="" icon="chevron-back-outline" style="display: block !important; ">
+                </ion-back-button>
+            </ion-buttons>
+            <ion-title>
+                <div class="title_inner d-flex">
+                    <h3 class="end">
+                        <span class="favorite_icon" [ngClass]="vendor.is_favourite ? 'end active' : 'end'"
+                            (click)="toggleFavorite()">
+                            <ion-icon class="zmdi zmdi-favorite-outline ion-text-center"></ion-icon>
+                            <ion-icon class="zmdi zmdi-favorite ion-text-center"></ion-icon>
+                        </span>
+                        <!-- <ion-icon class="zmdi zmdi-search end ion-text-end" (click)="navSearch()"></ion-icon> -->
+                    </h3>
+                </div>
+            </ion-title>
+        </ion-toolbar>
+
+        <div class="store_details">
+            <h2 class=""> {{vendor.name}}</h2>
+            <!-- <p class="">{{vendor.categories_text}} </p> -->
+            <div class="d-flex " style="align-items: flex-start;margin-bottom: 10px;">
+                <h4 class="d-flex" style="max-width: 45%;"> {{vendor.categories_text}} </h4>
+                <h5 *ngIf="vendor.opening_time_toshow && vendor.closing_time_toshow" class="d-flex end ion-text-end">
+                    {{'open_now' | translate}} &nbsp; <span> {{vendor.opening_time_toshow}} -
+                        {{vendor.closing_time_toshow}}
+                    </span>
+                </h5>
+            </div>
+            <div class="d-flex " style="align-items: flex-start;">
+                <h4 class="d-flex">
+                    <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon>
+                    {{vendor.distance_toshow}} | {{vendor.address}}
+                </h4>
+                <h5 class="d-flex end ion-text-end" (click)="navReviews()">
+                    <small class="end">
+                        <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                        {{vendor.ratings}}
+                    </small>
+                    <span>{{vendor.ratings_count}} {{'reviews' | translate}}
+                        <ion-icon class="zmdi zmdi-chevron-right ion-text-end"></ion-icon>
+                    </span>
+                </h5>
+            </div>
+        </div>
+
+        <ion-segment *ngIf="!(products && products.length)" mode="ios" scrollable>
+            <ion-segment-button *ngFor="let cmi of [1,2,3,4,5]" mode="ios">
+                <ion-label>
+                    <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                </ion-label>
+            </ion-segment-button>
+        </ion-segment>
+
+        <ion-segment *ngIf="(products && products.length)" mode="ios" [value]="tabIndexString"
+            [(ngModel)]="tabIndexString" (ionChange)="segmentChanged()" scrollable>
+            <ion-segment-button *ngFor="let cmi of categoriesMenuItems" [id]="'segment_button_'+cmi.category.id"
+                [value]="'segment_index_'+cmi.category.id" mode="ios">
+                <ion-label>{{cmi.category.title}}</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+    </ion-header>
+
+    <div class="tab_content">
+
+        <ion-slides *ngIf="isLoading && (!products || !products.length)">
+            <ion-slide>
+                <ion-content class="bg_color">
+                    <ion-list lines="none">
+                        <ion-item *ngFor="let item of [1,2,3,4,5,6,7,8]">
+                            <div class="item_inner d-flex">
+                                <div class="img_box">
+                                    <div class="skeleton_img"></div>
+                                </div>
+                                <div class="text_box">
+                                    <div class="" style="width: 100%;">
+                                        <div style="padding-bottom:10px;" class="d-flex">
+                                            <h3>
+                                                <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                                            </h3>
+                                        </div>
+                                        <h4 class="d-flex">
+                                            <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </ion-item>
+                    </ion-list>
+                </ion-content>
+            </ion-slide>
+        </ion-slides>
+
+        <div class="empty-view " *ngIf="!isLoading && (!products || !products.length)">
+            <div style="text-align:center">
+                <img class="light_img" src="assets/images/empty_plc_light.png" alt="no offers" />
+                <img class="dark_img" src="assets/images/empty_plc_dark.png" alt="no offers" />
+                <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+                <span style="color:#9E9E9E; font-weight:bold;">
+                    {{ (isLoading ? 'loading' : 'empty_products') | translate}}
+                </span>
+            </div>
+        </div>
+        
+        <ion-slides #slides (ionSlideWillChange)="slideChanged()">
+            <ion-slide *ngFor="let cmi of categoriesMenuItems">
+                <ion-content class="bg_color">
+                    <div class="empty-view"
+                        *ngIf="!isLoading && products && products.length && (!cmi.menu_items || !cmi.menu_items.length)">
+                        <div style="text-align:center">
+                            <img class="light_img" src="assets/images/empty_plc_light.png" alt="no offers" />
+                            <img class="dark_img" src="assets/images/empty_plc_dark.png" alt="no offers" />
+                            <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+                            <span style="color:#9E9E9E; font-weight:bold;">
+                                {{ (isLoading ? 'loading' : 'empty_products') | translate}}
+                            </span>
+                        </div>
+                    </div>
+                    <ion-list *ngIf="isLoading && products && products.length && (!cmi.menu_items || !cmi.menu_items.length)" lines="none">
+                        <ion-item *ngFor="let item of [1,2,3,4,5,6,7,8]">
+                            <div class="item_inner d-flex">
+                                <div class="img_box">
+                                    <div class="skeleton_img"></div>
+                                </div>
+                                <div class="text_box">
+                                    <div class="" style="width: 100%;">
+                                        <div style="padding-bottom:10px;" class="d-flex">
+                                            <h3>
+                                                <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                                            </h3>
+                                        </div>
+                                        <h4 class="d-flex">
+                                            <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </ion-item>
+                    </ion-list>
+                    <ion-list lines="none">
+                        <ion-item *ngFor="let item of cmi.menu_items">
+                            <div class="item_inner d-flex">
+                                <div class="img_box">
+                                    <img [src]="item.images[0]">
+                                </div>
+                                <div class="text_box">
+                                    <div class="" style="width: 100%;">
+                                        <div style="padding-bottom:10px;" class="d-flex">
+                                            <h3>{{item.title}}</h3>
+
+                                            <del *ngIf="!bookTableOnly && !item.in_stock" class="end">
+                                                <h6 class="end">{{'add' | translate}}</h6>
+                                            </del>
+                                            <h6 *ngIf="!bookTableOnly && !item.quantity && item.in_stock" class="end"
+                                                (click)="addProCart(item)">
+                                                {{'add' | translate}}
+                                            </h6>
+
+                                            <p *ngIf="!bookTableOnly && item.quantity > 0 && item.in_stock" class="end">
+                                                <span (click)="removeItem(item)">-</span>
+                                                <strong>{{item.quantity}}</strong>
+                                                <span (click)="addProCart(item)">+</span>
+                                            </p>
+                                        </div>
+                                        <h4 class="d-flex">
+                                            <img *ngIf="item.meta && item.meta.food_type == 'veg'"
+                                                src="assets/images/ic_veg.png">
+                                            <img *ngIf="item.meta && item.meta.food_type != 'veg'"
+                                                src="assets/images/ic_nonveg.png">&nbsp;&nbsp;
+                                            <span *ngIf="item.sale_priceToShow "
+                                                class="d-block priceToShow"><s>{{item.priceToShow}}</s>&nbsp;&nbsp;&nbsp;</span>
+                                            <span class="d-block ml-auto">{{item.sale_priceToShow ?
+                                                item.sale_priceToShow :
+                                                item.priceToShow}}</span>
+
+                                            <span class="customise end"
+                                                *ngIf="!bookTableOnly && item.addon_groups && item.addon_groups.length && item.in_stock"
+                                                (click)="variationSelection(item)">
+                                                {{'customise' | translate}}
+                                            </span>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </ion-item>
+                    </ion-list>
+                    <ion-infinite-scroll style="padding-bottom: 50px;" (ionInfinite)="doInfiniteProducts($event)">
+                        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="{{'loading' | translate}}">
+                        </ion-infinite-scroll-content>
+                    </ion-infinite-scroll>
+                </ion-content>
+            </ion-slide>
+        </ion-slides>
+    </div>
+
+    <ion-footer *ngIf="!bookTableOnly && eComService.getCartItemsCount() > 0" class="ion-no-border ">
+        <div class="cart_btn" (click)="continueNav()">
+            <h2 class="d-flex">
+                <img src="assets/images/ic_cart_wt.png">&nbsp; &nbsp; {{eComService.getCartItemsCount()}} {{'items' |
+                translate}} &nbsp;|&nbsp; {{currency_icon}} {{eComService.getCartItemsTotal(true)}}
+                <span class="end">{{'view_cart' | translate}}</span>
+            </h2>
+        </div>
+    </ion-footer>
+
+    <ion-footer *ngIf="bookTableOnly && categoriesMenuItems && categoriesMenuItems.length" class="ion-no-border">
+        <ion-button size="large" expand="full" class="btn" (click)="continueNav()">{{'book_a_table' | translate}}
+        </ion-button>
+    </ion-footer>
+</div>

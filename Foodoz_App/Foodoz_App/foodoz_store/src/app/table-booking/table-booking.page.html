@@ -1,0 +1,87 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{'table_booking' | translate}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg_color" fullscreen>
+    <div class="tab_content">
+        <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200" (ionRefresh)="doRefresh($event)">
+            <ion-refresher-content pullingIcon="chevron-down-circle-outline"
+                pullingText="{{'pull_refresh' | translate}}" refreshingSpinner="circles"
+                refreshingText="{{'refreshing' | translate}}">
+            </ion-refresher-content>
+        </ion-refresher>
+        <div class="empty-view animate__animated animate__fadeInUp" *ngIf="(!appointments || !appointments.length)">
+            <div style="text-align:center">
+                <img src="assets/images/plc_no_item.png" alt="no offers" style="display: block; margin: 0 auto;" />
+                <ion-spinner *ngIf="isLoadingAppointments" name="crescent" style="display: block; margin: 0 auto;">
+                </ion-spinner>
+                <span style="color:#9E9E9E; font-weight:bold;">
+                    {{ (isLoadingAppointments ? 'appear_here_appointments' : 'empty_appointments') | translate}}
+                </span>
+            </div>
+        </div>
+
+        <ion-list lines="none">
+            <div *ngFor="let appoint of appointments">
+                <h2 *ngIf="0 > appoint.id">{{appoint.type | translate}}</h2>
+                <ion-item *ngIf="appoint.id > 0" class="delivered animate__animated animate__fadeInUp">
+                    <div class="item_inner">
+                        <div class="item_info d-flex">
+                            <div class="item_details">
+                                <h3 *ngIf="appoint.is_guest" class="d-flex">
+                                    {{appoint.customer_name}}
+                                    <span class="end">
+                                        <ion-icon class="ion-text-end end zmdi zmdi-phone"
+                                            (click)="dialCustomer(appoint.customer_mobile)"></ion-icon>
+                                    </span>
+                                </h3>
+                                <h3 *ngIf="!appoint.is_guest" class="d-flex">
+                                    {{appoint.user.name}}
+                                    <span class="end">
+                                        <ion-icon class="ion-text-end end zmdi zmdi-phone"
+                                            (click)="dialCustomer(appoint.user.mobile_number)"></ion-icon>
+                                    </span>
+                                </h3>
+                                <h4 class="d-flex">{{appoint?.meta?.person}} {{(appoint?.meta?.person == 1 ? 'person' :
+                                    'persons') | translate}} <span class="end">{{appoint.date}},
+                                        {{appoint.time_from}}</span></h4>
+                            </div>
+
+                        </div>
+                        <div class="booking_for d-flex">
+                            <h6 *ngIf="appoint.meta && appoint.meta.note">{{'book_for' | translate}}
+                                {{appoint.meta.note}}
+                            </h6>
+                            <div class="action_buttons end">
+                                <span *ngIf="appoint.status == 'new' || appoint.status == 'pending'"
+                                    (click)="confirmReject(appoint)" class="reject">
+                                    <small>{{'booking_reject' | translate}}</small>
+                                </span> &nbsp;
+                                <span *ngIf="appoint.status == 'new' || appoint.status == 'pending'"
+                                    (click)="confirmAccept(appoint)" class="accept">
+                                    <small>{{'booking_accept' | translate}}</small>
+                                </span>
+                                <span *ngIf="!(appoint.status == 'new' || appoint.status == 'pending')"
+                                    class="complete">
+                                    <small>{{'order_status_'+appoint.status | translate}}</small>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </ion-item>
+            </div>
+        </ion-list>
+        <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+            <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="{{'loading' | translate}}">
+            </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+
+
+    </div>
+
+</ion-content>

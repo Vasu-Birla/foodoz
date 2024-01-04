@@ -1,0 +1,245 @@
+<div class="row">
+    <div class="col-md-12">
+        <nb-card>
+            <nb-card-body [nbSpinner]="showProgress" nbSpinnerStatus="danger">
+                <form (ngSubmit)="saveOrder()" #form="ngForm">
+                    <div *ngIf="apiLoaded | async" class="row">
+                        <div class="col-md-12">
+                            <google-map #googleMap width="100%" (boundsChanged)="onBoundsChanged()" minZoom="1">
+                                <map-marker
+                                    [position]="{ lat: parseFloat(order?.address?.latitude), lng: parseFloat(order?.address?.longitude) }"
+                                    label="C">
+                                </map-marker>
+                                <map-marker
+                                    [position]="{ lat: parseFloat(order?.vendor?.latitude), lng: parseFloat(order?.vendor?.longitude) }"
+                                    label="V">
+                                </map-marker>
+                                <map-marker
+                                    [position]="{ lat: parseFloat(order?.delivery?.delivery?.latitude), lng: parseFloat(order?.delivery?.delivery?.longitude) }"
+                                    label="D">
+                                </map-marker>
+                            </google-map>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <nb-card>
+                                <nb-card-header>{{ 'ORDER.FIELDS.USER.HEADER' | translate }}</nb-card-header>
+                                <nb-card-body>
+                                    <div class="form-group">
+                                        <label>{{ 'ORDER.FIELDS.USER.MOBILE_NUMBER.LABEL' | translate }}</label>
+                                        <input readonly nbInput fullWidth [value]="order.user?.mobile_number" />
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>{{ 'ORDER.FIELDS.USER.EMAIL.LABEL' | translate }}</label>
+                                                <input readonly nbInput fullWidth [value]="order.user?.email" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>{{ 'ORDER.FIELDS.USER.NAME.LABEL' | translate }}</label>
+                                                <input readonly nbInput fullWidth [value]="order.user?.name" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </nb-card-body>
+                            </nb-card>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <nb-card>
+                                <nb-card-header>{{ 'ORDER.FIELDS.VENDOR.HEADER' | translate }}</nb-card-header>
+                                <nb-card-body>
+                                    <div class="form-group">
+                                        <label>{{ 'ORDER.FIELDS.VENDOR.NAME.LABEL' | translate }}</label>
+                                        <input readonly nbInput fullWidth [value]="order.vendor?.name" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{{ 'ORDER.FIELDS.VENDOR.ADDRESS.LABEL' | translate }}</label>
+                                        <input readonly nbInput fullWidth [value]="order.vendor?.address" />
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>{{ 'ORDER.FIELDS.VENDOR.LATITUDE.LABEL' | translate }}</label>
+                                                <input readonly nbInput fullWidth [value]="order.vendor?.latitude" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>{{ 'ORDER.FIELDS.VENDOR.LONGITUDE.LABEL' | translate }}</label>
+                                                <input readonly nbInput fullWidth
+                                                    [value]="order.vendor?.longitude" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </nb-card-body>
+                            </nb-card>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <nb-card>
+                                <nb-card-header>{{ 'ORDER.FIELDS.ADDRESS.HEADER' | translate }}</nb-card-header>
+                                <nb-card-body>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>{{ 'ORDER.FIELDS.ADDRESS.FORMATTED_ADDRESS.LABEL' | translate }}</label>
+                                                <input readonly nbInput fullWidth
+                                                    [value]="order.address?.formatted_address" />
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>{{ 'ORDER.FIELDS.ADDRESS.LATITUDE.LABEL' | translate }}</label>
+                                                        <input readonly nbInput fullWidth
+                                                            [value]="order.address?.latitude" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>{{ 'ORDER.FIELDS.ADDRESS.LONGITUDE.LABEL' | translate }}</label>
+                                                        <input readonly nbInput fullWidth
+                                                            [value]="order.address?.longitude" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </nb-card-body>
+                            </nb-card>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <nb-card>
+                                <nb-card-header>{{ 'ORDER.FIELDS.DELIVERY.HEADER' | translate }}</nb-card-header>
+                                <nb-card-body>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>{{ 'ORDER.FIELDS.DELIVERY.STATUS.LABEL' | translate }}</label>
+                                                <input readonly nbInput fullWidth [value]="order.delivery?.status" />
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>{{ 'ORDER.FIELDS.DELIVERY.NAME.LABEL' | translate }}</label>
+                                                        <input readonly nbInput fullWidth
+                                                            [value]="order.delivery?.delivery?.user?.name" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>{{ 'ORDER.FIELDS.DELIVERY.MOBILE_NUMBER.LABEL' | translate }}</label>
+                                                        <input readonly nbInput fullWidth
+                                                            [value]="order.delivery?.delivery?.user?.mobile_number" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>{{ 'ORDER.FIELDS.DELIVERY.LATITUDE.LABEL' | translate }}</label>
+                                                        <input readonly nbInput fullWidth
+                                                            [value]="order.delivery?.delivery?.latitude" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>{{ 'ORDER.FIELDS.DELIVERY.LONGITUDE.LABEL' | translate }}</label>
+                                                        <input readonly nbInput fullWidth
+                                                            [value]="order.delivery?.delivery?.longitude" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </nb-card-body>
+                            </nb-card>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <nb-card>
+                                <nb-card-header>{{ 'ORDER.FIELDS.PAYMENT.HEADER' | translate }}</nb-card-header>
+                                <nb-card-body>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>{{ 'ORDER.FIELDS.SUBTOTAL.LABEL' | translate }}</label>
+                                                <input readonly nbInput fullWidth [value]="order.subtotal" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>{{ 'ORDER.FIELDS.TAXES.LABEL' | translate }}</label>
+                                                <input readonly nbInput fullWidth [value]="order.taxes" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>{{ 'ORDER.FIELDS.DELIVERY_FEE.LABEL' | translate }}</label>
+                                                <input readonly nbInput fullWidth [value]="order.delivery_fee" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>{{ 'ORDER.FIELDS.DISCOUNT.LABEL' | translate }}</label>
+                                                <input readonly nbInput fullWidth [value]="order.discount" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{{ 'ORDER.FIELDS.TOTAL.LABEL' | translate }}</label>
+                                        <input readonly nbInput fullWidth [value]="order.total" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{{ 'ORDER.FIELDS.PAYMENT_METHOD.LABEL' | translate }}</label>
+                                        <input readonly nbInput fullWidth
+                                            [value]="order.payment?.payment_method?.title" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>{{ 'ORDER.FIELDS.PAYMENT_STATUS.LABEL' | translate }}</label>
+                                        <input readonly nbInput fullWidth [value]="order.payment?.status" />
+                                    </div>
+                                </nb-card-body>
+                            </nb-card>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>{{ 'ORDER.FIELDS.TYPE.LABEL' | translate }}</label>
+                        <input readonly nbInput fullWidth [value]="order.type" />
+                    </div>
+                    <div class="form-group">
+                        <label>{{ 'ORDER.FIELDS.CREATED_AT.LABEL' | translate }}</label>
+                        <input readonly nbInput fullWidth [value]="order.created_at" />
+                    </div>
+                    <div class="form-group">
+                        <label>{{ 'ORDER.FIELDS.STATUS.LABEL' | translate }}</label>
+                        <nb-select fullWidth name="status" id="status" [(ngModel)]="orderRequest.status"
+                            #status=ngModel style="text-transform:capitalize">
+                            <nb-option *ngFor="let orderStatus of orderStatusList" [value]="orderStatus">{{ orderStatus }}
+                            </nb-option>
+                        </nb-select>
+                        <label class="error text-danger" *ngFor="let error of orderError.status">{{error}}</label>
+                    </div>
+                    <button type="submit" [disabled]="!form.form.valid || showProgressButton" nbButton status="success"
+                        size="medium" [nbSpinner]="showProgressButton" nbSpinnerStatus="success" nbSpinnerSize="small">
+                        {{ 'COMMON.SAVE' | translate }}
+                    </button>
+                    &nbsp;
+                    <button type="button" nbButton status="danger" size="medium" (click)="back()">
+                        {{ 'COMMON.BACK' | translate }}
+                    </button>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

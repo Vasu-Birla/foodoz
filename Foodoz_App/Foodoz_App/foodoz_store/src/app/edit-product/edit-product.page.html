@@ -1,0 +1,355 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            <div class="title_inner d-flex">
+                {{pageTitle}}
+
+                <div class="toggle_box end" [ngClass]="productQuantityStatus ? 'in_stock' : ''">
+                    <span *ngIf="productQuantityStatus">{{'in_stock' | translate}}</span>
+                    <span *ngIf="!productQuantityStatus">{{'out_of_stock' | translate}}</span>&nbsp;&nbsp;
+                    <ion-toggle [(ngModel)]="productQuantityStatus" mode="ios">
+                    </ion-toggle>
+                </div>
+            </div>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg_color" fullscreen>
+    <ion-list lines="none">
+        <ion-item class="feature_image animate__animated animate__fadeInUp">
+            <div class="item_image_container">
+                <div class="img_box center_img add_img" (click)="pickImage()">
+                    <ion-icon class="zmdi zmdi-camera"></ion-icon>
+                </div>
+                <div *ngFor="let image of productRequest.image_urls; let i = index" class="img_box center_img">
+                    <img [src]="image" class="crop_img">
+                    <ion-icon class="zmdi zmdi-delete ion-text-end" (click)="confirmRemoveImage(i)"></ion-icon>
+                </div>
+            </div>
+        </ion-item>
+
+        <div class="form animate__animated animate__fadeInUp">
+            <h2>{{'item_info' | translate}}</h2>
+
+            <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                <div class="item_inner d-flex">
+                    <div class="input_box">
+                        <ion-label mode="md" position="stacked">{{"item_title" | translate}}</ion-label>
+                        <ion-input mode="md" type="text" placeholder="{{'enter_item_name' | translate}}"
+                            [(ngModel)]="productRequest.title"></ion-input>
+                    </div>
+                </div>
+            </ion-item>
+
+            <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                <div class="item_inner d-flex">
+                    <div class="input_box">
+                        <ion-label mode="md" position="stacked">{{"item_category" | translate}}</ion-label>
+                        <div class="d-flex" style="align-items: flex-end;">
+                            <ion-select mode="md" multiple="true" [(ngModel)]="categoriesSelectedStrings"
+                                (ionChange)="onCategoriesChange()" [value]="categoriesSelectedStrings"
+                                [selectedText]="categoriesSelectedStringsFormatted"
+                                cancelText="{{'cancel' | translate}}" okText="{{'okay' | translate}}">
+                                <ion-select-option *ngFor="let cat of categoryStrings" [value]="cat">
+                                    {{cat}}
+                                </ion-select-option>
+                            </ion-select>
+
+                            <ion-icon class="zmdi zmdi-chevron-down ion-text-end end"></ion-icon>
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+
+            <ion-row>
+                <ion-col size="12">
+                    <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                        <div class="item_inner d-flex">
+                            <div class="input_box">
+                                <ion-label mode="md" position="stacked">{{"item_price" | translate}} ({{currency_icon}})
+                                </ion-label>
+                                <ion-input mode="md" type="number" placeholder="{{'enter_price' | translate}}"
+                                    [(ngModel)]="productRequest.price"></ion-input>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-col>
+
+                <ion-col size="12">
+                    <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                        <div class="item_inner d-flex">
+                            <div class="input_box">
+                                <ion-label mode="md" position="stacked">{{"discounted_price" | translate}}
+                                    ({{currency_icon}})
+                                </ion-label>
+                                <ion-input mode="md" type="number" [(ngModel)]="productRequest.sale_price"
+                                    placeholder="{{'enter_discounted_price' | translate}}"></ion-input>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+
+
+            <div class="form food_type animate__animated animate__fadeInUp" style="padding: 0; padding-top: 15px;">
+                <h2>{{'item_type' | translate}}</h2>
+                <ion-radio-group [value]="productRequest.meta.food_type" [(ngModel)]="productRequest.meta.food_type">
+                    <ion-row>
+                        <ion-col size="5">
+                            <ion-item lines="none">
+                                <div class="item_inner d-flex">
+                                    <ion-radio value="veg"></ion-radio>
+                                    <h3>{{"veg" | translate}}</h3>
+                                </div>
+                            </ion-item>
+                        </ion-col>
+
+                        <ion-col size="5">
+                            <ion-item lines="none">
+                                <div class="item_inner d-flex">
+                                    <ion-radio value="non_veg"></ion-radio>
+                                    <h3>{{"non_veg" | translate}}</h3>
+                                </div>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                </ion-radio-group>
+            </div>
+        </div>
+
+        <!-- <div class="form description animate__animated animate__fadeInUp">
+            <h2>{{'add_description' | translate}}</h2>
+            <ion-item lines="none">
+                <div class="item_inner d-flex">
+                    <div class="input_box">
+                        <ion-textarea style="font-weight: 500 !important;" rows="1" auto-grow="true" mode="md"
+                            type="text" [(ngModel)]="productRequest.detail"
+                            placeholder="{{'describe_your_item' | translate}}">
+                        </ion-textarea>
+                    </div>
+                </div>
+            </ion-item>
+        </div> -->
+
+
+        <div class="" style="margin-bottom: 8px;">
+            <div class="form adisional_app animate__animated animate__fadeInUp">
+                <ion-item lines="none">
+                    <p class="d-flex">
+                        {{'add_specification' | translate}}
+                        <ion-toggle [(ngModel)]="addOnsEnabled" mode="ios" class="end"></ion-toggle>
+                    </p>
+                </ion-item>
+            </div>
+
+            <div *ngIf="addOnsEnabled" [formGroup]="addonForm" class="form add_specification"
+                style="margin-bottom: 0; padding-top: 0;">
+                <div formArrayName="addon_groups">
+                    <div class="addon_groups"
+                        *ngFor="let x of addonForm.controls.addon_groups['controls']; let i = index"
+                        formGroupName="{{i}}">
+                        <div class="d-flex" style="align-items: baseline;">
+                            <h2>{{'addon_group' | translate}} {{i+1}}</h2>
+                            <h6 class="end" (click)="addAddonGroup()">+ {{"add_more_group" | translate}}</h6>
+                        </div>
+                        <ion-row>
+                            <ion-col size="12">
+                                <h3 class="d-flex">{{"addon_group_name" | translate}}
+                                    <span class="end delete_group"
+                                        *ngIf="addonForm.controls.addon_groups['controls'].length > 1"
+                                        (click)="deleteAddonGroupForm(i)">
+                                        {{'delete_group' | translate}} {{i+1}}
+                                    </span>
+                                </h3>
+                                <ion-item lines="none" style="padding-top: 6px;">
+                                    <div class="item_inner d-flex">
+                                        <div class="input_box">
+                                            <!-- <ion-label class="d-flex" mode="md" position="stacked">{{"addon_group_name" | translate}}
+                                                <span class="end delete_group" *ngIf="addonForm.controls.addon_groups['controls'].length > 1" (click)="deleteAddonGroupForm(i)"> {{'delete_group' | translate}}
+                                                    {{i+1}}</span>
+                                            </ion-label> -->
+                                            <ion-input mode="md" type="text" formControlName="title"
+                                                placeholder="{{'addon_group_name' | translate}}">
+                                            </ion-input>
+                                        </div>
+                                    </div>
+                                </ion-item>
+                            </ion-col>
+
+                            <ion-col size="6">
+                                <ion-item lines="none">
+                                    <div class="item_inner d-flex">
+                                        <div class="input_box">
+                                            <ion-label mode="md" position="stacked">{{"minimum_option" | translate}}
+                                            </ion-label>
+                                            <ion-input mode="md" type="tel" formControlName="min_choices"
+                                                placeholder="{{'minimum_option' | translate}}" value="2">
+                                            </ion-input>
+                                        </div>
+                                    </div>
+                                </ion-item>
+                            </ion-col>
+
+                            <ion-col size="6">
+                                <ion-item lines="none">
+                                    <div class="item_inner d-flex">
+                                        <div class="input_box">
+                                            <ion-label mode="md" position="stacked">{{"maximum_option" | translate}}
+                                            </ion-label>
+                                            <ion-input mode="md" type="tel" formControlName="max_choices"
+                                                placeholder="{{'maximum_option' | translate}}" value=" 10">
+                                            </ion-input>
+                                        </div>
+                                    </div>
+                                </ion-item>
+                            </ion-col>
+
+                            <ion-col size="12">
+                                <ion-item lines="none" style="padding-bottom: 0; padding-top: 0;">
+                                    <div class="item_inner d-flex">
+                                        <h2>{{'option' | translate}}</h2>
+                                        <h6 class="" (click)="addAddonChoice(i)">+ {{"add_more_option" | translate}}
+                                        </h6>
+                                    </div>
+                                </ion-item>
+                            </ion-col>
+                        </ion-row>
+
+
+                        <div formArrayName="choices">
+                            <ion-row *ngFor="let y of x['controls'].choices['controls']; let iy=index"
+                                formGroupName="{{iy}}">
+                                <ion-col size="5">
+                                    <ion-item lines="none">
+                                        <div class="item_inner d-flex">
+                                            <div class="input_box">
+                                                <ion-label mode="md" position="stacked">{{"option_title" | translate}}
+                                                </ion-label>
+                                                <ion-input mode="md" type="text" formControlName="title"
+                                                    placeholder="{{'option_title' | translate}}"></ion-input>
+                                            </div>
+                                        </div>
+                                    </ion-item>
+                                </ion-col>
+                                <ion-col size="5">
+                                    <ion-item lines="none">
+                                        <div class="item_inner d-flex">
+                                            <div class="input_box">
+                                                <ion-label mode="md" position="stacked">{{"price" | translate}}
+                                                    ({{currency_icon}})
+                                                </ion-label>
+                                                <ion-input mode="md" type="number"
+                                                    placeholder="{{'enter_price' | translate}}" formControlName="price">
+                                                </ion-input>
+                                            </div>
+                                        </div>
+                                    </ion-item>
+                                </ion-col>
+
+                                <ion-col size="2">
+                                    <ion-item lines="none" style=" position: relative;
+                                        top: 17px;">
+                                        <div class="item_inner d-flex" style="min-height: 26px;">
+                                            <ion-icon (click)="deleteAddonChoiceForm(iy,x['controls'].choices)"
+                                                *ngIf="x['controls'].choices['controls'].length > 1"
+                                                class="zmdi zmdi-close end"></ion-icon>
+                                        </div>
+                                    </ion-item>
+                                </ion-col>
+                            </ion-row>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- <div class="form add_ingredients add_specification  animate__animated animate__fadeInUp">
+            <div class="d-flex" style="align-items: baseline;">
+                <h2 style="padding: 0;">{{'ingredients' | translate}}</h2>
+                <h6 class="ion-text-end end" (click)="addIngredient()">+ {{"add_ingredient" | translate}}</h6>
+            </div>
+            <ion-row *ngFor="let ingre of productIngredient; let i = index">
+                <ion-col size="10">
+                    <ion-item lines="none">
+                        <div class="item_inner d-flex">
+                            <div class="input_box">
+                                <ion-input mode="md" type="text" [(ngModel)]="ingre.title"
+                                    placeholder="{{'ingredient_title' | translate}}">
+                                </ion-input>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="2">
+                    <ion-item lines="none" style="position: relative; top: 17px;">
+                        <div style="min-height: 26px;" *ngIf="productIngredient.length > 1" class="item_inner d-flex"
+                            (click)="deleteIngredient(i)">
+                            <ion-icon class="zmdi zmdi-close end"></ion-icon>
+                        </div>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </div>
+
+        <div class="form item_video  animate__animated animate__fadeInUp">
+            <h2>{{'item_video' | translate}}</h2>
+            <ion-item lines="none">
+                <div class="item_inner d-flex" (click)="getVideo()">
+                    <ion-icon class="zmdi zmdi-upload ion-text-start"></ion-icon>
+                    <h5 *ngIf="!(productRequest.meta && productRequest.meta.video_url)">{{"not_uploaded_yet" |
+                        translate}}
+                    </h5>
+                    <h5 *ngIf="(productRequest.meta && productRequest.meta.video_url)">{{"uploaded" | translate}}</h5>
+                    <h5 class="end ion-text-end">{{ (productRequest.meta.video_url &&
+                        productRequest.meta.video_url.length?'reupload':'upload') | translate}}</h5>
+                </div>
+            </ion-item>
+
+        </div>
+
+        <div class="form animate__animated animate__fadeInUp">
+            <h2>{{'more_info' | translate}}</h2>
+            <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                <div class="item_inner d-flex">
+                    <div class="input_box">
+                        <ion-label mode="md" position="stacked">{{"servings_for" | translate}}</ion-label>
+                        <ion-input mode="md" type="tel" placeholder="{{'number_of_people' | translate}}"
+                            [(ngModel)]="productRequest.meta.serving"></ion-input>
+                    </div>
+                </div>
+            </ion-item>
+
+            <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                <div class="item_inner d-flex">
+                    <div class="input_box">
+                        <ion-label mode="md" position="stacked">{{"cooking_time" | translate}}
+                        </ion-label>
+                        <ion-input mode="md" type="number" placeholder="{{'in_minute' | translate}}"
+                            [(ngModel)]="productRequest.meta.cooking_time"></ion-input>
+                    </div>
+                </div>
+            </ion-item>
+
+            <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                <div class="item_inner d-flex">
+                    <div class="input_box">
+                        <ion-label mode="md" position="stacked">{{"energy" | translate}}</ion-label>
+                        <ion-input mode="md" type="number" placeholder="{{'in_kcal' | translate}}"
+                            [(ngModel)]="productRequest.meta.energy"></ion-input>
+                    </div>
+                </div>
+            </ion-item>
+        </div> -->
+    </ion-list>
+</ion-content>
+
+<ion-footer class="ion-no-border animate__animated animate__fadeInUp">
+    <ion-button size="large" expand="full" class="btn" (click)="saveProduct()">{{'update_info' | translate}}
+    </ion-button>
+</ion-footer>

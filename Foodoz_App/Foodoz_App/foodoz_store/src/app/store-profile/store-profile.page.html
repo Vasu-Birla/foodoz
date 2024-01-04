@@ -1,0 +1,328 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start" mode="md">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            {{'edit_profile' | translate}}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="bg_color" fullscreen>
+    <ion-list lines="none">
+        <div class="form animate__animated animate__fadeInUp feature_image">
+            <h2> {{'feature_image' | translate}}</h2>
+            <ion-item>
+                <div class="item_inner">
+                    <div class="d-flex" style="align-items: flex-start;">
+                        <div *ngIf="profile && profile.image_urls && profile.image_urls.length" class="img_box center_img">
+                            <img [src]="profile.image_urls[0]" class="crop_img">
+                        </div>
+                        <div *ngIf="!profile || !profile.image_urls || !profile.image_urls.length" class="img_box center_img">
+                            <img src="assets/images/plc_seller_profile.png" class="crop_img">
+                        </div>
+                        <h3 class="d-flex" (click)="pickImage()">
+                            <ion-icon class="zmdi zmdi-camera ion-text-start"></ion-icon>
+                            {{'upload_photo' | translate}}
+                        </h3>
+                    </div>
+                </div>
+            </ion-item>
+        </div>
+        <div class="form animate__animated animate__fadeInUp">
+            <h2>{{'restaurant_info' | translate}}</h2>
+
+            <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                <div class="item_inner d-flex">
+                    <div class="input_box">
+                        <ion-label mode="md" position="stacked">{{"restaurant_name" | translate}}</ion-label>
+                        <ion-input mode="md" type="text" [(ngModel)]="profile.name"></ion-input>
+                    </div>
+                </div>
+            </ion-item>
+
+            <!-- <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                <div class="item_inner d-flex">
+                    <div class="input_box">
+                        <ion-label mode="md" position="stacked">{{"table_number" | translate}}</ion-label>
+                        <ion-input mode="md" type="tel" [(ngModel)]="profile.meta.tables"> </ion-input>
+                    </div>
+                </div>
+            </ion-item> -->
+
+            <ion-item class="animate__animated animate__fadeInUp" lines="none" disabled="boolean">
+                <div class="item_inner d-flex" style="opacity: .5;">
+                    <div class="input_box">
+                        <ion-label mode="md" position="stacked">{{"phone_number" | translate}}</ion-label>
+                        <ion-input mode="md" type="tel" readonly [(ngModel)]="profile.user.mobile_number"></ion-input>
+                    </div>
+                </div>
+            </ion-item>
+
+            <ion-item class="animate__animated animate__fadeInUp" lines="none" disabled="boolean">
+                <div class="item_inner d-flex" style="opacity: .5;">
+                    <div class="input_box">
+                        <ion-label mode="md" position="stacked">{{"email_address" | translate}}</ion-label>
+                        <ion-input mode="md" type="email" readonly [(ngModel)]="profile.user.email"> </ion-input>
+                    </div>
+                </div>
+            </ion-item>
+        </div>
+
+        <div class="form animate__animated animate__fadeInUp address" (click)="navAddAddress()">
+            <h2>{{'address' | translate}}</h2>
+            <ion-item lines="none">
+                <div class="item_inner">
+                    <!-- <ion-label mode="md" position="stacked">{{"email_address" | translate}}</ion-label> -->
+                    <div class="input_box">
+                        <p *ngIf="profile.address && profile.address.length" class="d-flex">
+                            <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon>
+                            {{profile.address}}
+                        </p>
+                        <p *ngIf="!profile.address || !profile.address.length" class="d-flex">
+                            <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon>
+                            {{"set_location" | translate}}
+                        </p>
+                    </div>
+                </div>
+            </ion-item>
+        </div>
+
+        <div class="form animate__animated animate__fadeInUp store_timings">
+            <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                <div class="item_inner d-flex">
+                    <div class="input_box">
+                        <ion-label mode="md" position="stacked">{{"store_category" | translate}}</ion-label>
+                        <div class="d-flex" style="align-items: flex-end;">
+                            <ion-select mode="md" multiple="true" [(ngModel)]="categoriesSelectedStrings" (ionChange)="onCategoriesChange()" [value]="categoriesSelectedStrings" [selectedText]="categoriesSelectedStringsFormatted" cancelText="{{'cancel' | translate}}" okText="{{'okay' | translate}}">
+                                <ion-select-option *ngFor="let cat of categoryStrings" [value]="cat">
+                                    {{cat}}
+                                </ion-select-option>
+                            </ion-select>
+
+                            <ion-icon class="zmdi zmdi-chevron-down ion-text-end end"></ion-icon>
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+            <h2 style="padding-top: 20px;">{{'store_timings' | translate}}</h2>
+            <ion-row>
+                <ion-col>
+                    <ion-item lines="none">
+                        <div class="item_inner d-flex">
+                            <div class="input_box">
+                                <ion-label mode="md" position="stacked">{{"opening_time" | translate}}</ion-label>
+                                <ion-datetime mode="ios" displayFormat="HH:mm" [(ngModel)]="openingTime">
+                                </ion-datetime>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-col>
+
+                <ion-col size="1">
+                </ion-col>
+
+                <ion-col>
+                    <ion-item lines="none">
+                        <div class="item_inner d-flex">
+                            <div class="input_box">
+                                <ion-label mode="md" position="stacked">{{"closing_time" | translate}}</ion-label>
+                                <ion-datetime mode="ios" displayFormat="HH:mm" [(ngModel)]="closingTime">
+                                </ion-datetime>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </div>
+
+        <!-- <div class="form animate__animated animate__fadeInUp order_color_settings">
+            <h2>{{'order_color_settings' | translate}}</h2>
+            <ion-row class="animate__animated animate__fadeInUp">
+                <ion-col>
+                    <ion-item lines="none">
+                        <div class="item_inner">
+                            <ion-label mode="md" position="stacked">{{"color" | translate}}</ion-label>
+                            <p class="d-flex">
+                                <ion-icon class="zmdi zmdi-circle" style="color: #009946"></ion-icon>
+                                {{'green' | translate}}
+                            </p>
+                        </div>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="1">
+                </ion-col>
+                <ion-col>
+                    <ion-item lines="none">
+                        <div class="item_inner">
+                            <ion-label mode="md" position="stacked">{{"set_timing" | translate}}</ion-label>
+                            <div class="input_box d-flex">
+                                <ion-select mode="md" multiple="false" [(ngModel)]="greenTimeKey" [value]="greenTimeKey" [selectedText]="greenTimeKey" cancelText="{{'cancel' | translate}}" okText="{{'okay' | translate}}">
+                                    <ion-select-option *ngFor="let time of apiService.times" [value]="time.key">
+                                        {{time.key}}
+                                    </ion-select-option>
+                                </ion-select>
+                                <ion-icon class="zmdi zmdi-time ion-text-end end"></ion-icon>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+
+            <ion-row class="animate__animated animate__fadeInUp">
+                <ion-col>
+                    <ion-item lines="none">
+                        <div class="item_inner">
+                            <p class="d-flex">
+                                <ion-icon class="zmdi zmdi-circle" style="color: #FBAF03"></ion-icon>
+                                {{'yelow' | translate}}
+                            </p>
+                        </div>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="1">
+                </ion-col>
+                <ion-col>
+                    <ion-item lines="none">
+                        <div class="item_inner">
+                            <div class="input_box d-flex">
+                                <ion-select mode="md" multiple="false" [(ngModel)]="yellowTimeKey" [value]="yellowTimeKey" [selectedText]="yellowTimeKey" cancelText="{{'cancel' | translate}}" okText="{{'okay' | translate}}">
+                                    <ion-select-option *ngFor="let time of apiService.times" [value]="time.key">
+                                        {{time.key}}
+                                    </ion-select-option>
+                                </ion-select>
+                                <ion-icon class="zmdi zmdi-time ion-text-end end"></ion-icon>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+
+            <ion-row class="animate__animated animate__fadeInUp">
+                <ion-col>
+                    <ion-item lines="none">
+                        <div class="item_inner">
+                            <p class="d-flex">
+                                <ion-icon class="zmdi zmdi-circle" style="color: #EB1E1E"></ion-icon>
+                                {{'red' | translate}}
+                            </p>
+                        </div>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="1">
+                </ion-col>
+                <ion-col>
+                    <ion-item lines="none">
+                        <div class="item_inner">
+                            <div class="input_box d-flex">
+                                <ion-select mode="md" multiple="false" [(ngModel)]="redTimeKey" [value]="redTimeKey" [selectedText]="redTimeKey" cancelText="{{'cancel' | translate}}" okText="{{'okay' | translate}}">
+                                    <ion-select-option *ngFor="let time of apiService.times" [value]="time.key">
+                                        {{time.key}}
+                                    </ion-select-option>
+                                </ion-select>
+                                <ion-icon class="zmdi zmdi-time ion-text-end end"></ion-icon>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </div>
+
+        <div class="form qr_code animate__animated animate__fadeInUp">
+            <h2>{{'qr_code' | translate}}</h2>
+            <p class="d-flex">
+                {{'qr_code_text' | translate}}
+            </p>
+            <h3 class="d-flex" (click)="showQr()">
+                <ion-icon class="zmdi zmdi-download"></ion-icon> {{'download' | translate}}
+            </h3>
+        </div>
+
+        <div class="form table_booking_enable animate__animated animate__fadeInUp">
+            <h2 class="d-flex">
+                {{'table_booking_enable' | translate}}
+            </h2>
+            <ion-item *ngIf="profile.meta.table_booking" class="animate__animated animate__fadeInUp" lines="none">
+                <div class="item_inner d-flex">
+                    <div class="input_box">
+                        <ion-label mode="md" position="stacked">{{"number_of_tables_available" | translate}}</ion-label>
+                        <ion-input mode="md" type="number" [(ngModel)]="profile.meta.no_of_tables">
+                        </ion-input>
+                    </div>
+                </div>
+            </ion-item>
+        </div>
+
+        <div class="form review_app animate__animated animate__fadeInUp">
+            <h2 class="d-flex"> {{'review_app' | translate}}
+                <ion-toggle mode="ios" class="end" [(ngModel)]="profile.meta.review_app"></ion-toggle>
+            </h2>
+
+            <div *ngIf="profile.meta.review_app && feedbackMatter">
+                <ion-item *ngFor="let question of feedbackMatter.questions; let i = index" class="animate__animated animate__fadeInUp" lines="none">
+                    <div class="item_inner d-flex">
+                        <div class="input_box">
+                            <ion-label mode="md" position="stacked">{{'qestion' | translate}} {{i+1}}</ion-label>
+                            <ion-input mode="md" type="text" [(ngModel)]="question.title"></ion-input>
+                        </div>
+                    </div>
+                </ion-item>
+                <h2 class="d-flex" style="padding-top: 27px;">{{'set_option' | translate}}</h2>
+                <ion-row>
+                    <ion-col size="6" *ngFor="let option of feedbackMatter.options; let i = index">
+                        <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                            <div class="item_inner">
+                                <div class="input_box d-flex">
+                                    <div class="img_box">
+                                        <img *ngIf="option.rank == 1" src="assets/images/loved_it.gif">
+                                        <img *ngIf="option.rank == 2" src="assets/images/good.gif">
+                                        <img *ngIf="option.rank == 3" src="assets/images/average.gif">
+                                        <img *ngIf="option.rank == 4" src="assets/images/not_good.gif">
+                                    </div>
+                                    <ion-input mode="md" type="text" [(ngModel)]="option.title"></ion-input>
+                                </div>
+                            </div>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+
+        <div class="form adisional_app animate__animated animate__fadeInUp">
+            <h2 class="d-flex"> {{'adisional_app' | translate}}</h2>
+            <ion-item lines="none">
+                <p class="d-flex">
+                    {{'kitchecn_app' | translate}}
+                    <ion-toggle mode="ios" class="end" [(ngModel)]="profile.meta.kitchecn_app"></ion-toggle>
+                </p>
+            </ion-item>
+            <ion-item lines="none">
+                <p class="d-flex">
+                    {{'kiosk_app' | translate}}
+                    <ion-toggle mode="ios" class="end" [(ngModel)]="profile.meta.kiosk_app"></ion-toggle>
+                </p>
+            </ion-item>
+            <ion-item lines="none">
+                <p class="d-flex">
+                    {{'emenu_app' | translate}}
+                    <ion-toggle mode="ios" class="end" [(ngModel)]="profile.meta.emenu_app"></ion-toggle>
+                </p>
+            </ion-item>
+            <ion-item lines="none">
+                <p class="d-flex">
+                    {{'desk_app' | translate}}
+                    <ion-toggle mode="ios" class="end" [(ngModel)]="profile.meta.desk_app"></ion-toggle>
+                </p>
+            </ion-item>
+        </div> -->
+
+    </ion-list>
+</ion-content>
+
+<ion-footer class="ion-no-border animate__animated animate__fadeInUp">
+    <ion-button size="large" expand="full" class="btn" (click)="update()">
+        {{'update_info' | translate}}
+    </ion-button>
+</ion-footer>

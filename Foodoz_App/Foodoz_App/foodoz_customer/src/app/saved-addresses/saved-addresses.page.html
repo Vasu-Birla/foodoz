@@ -1,0 +1,104 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{ (pick_location ? 'set_delivery_address' : (drop_location? 'set_drop_address': 'saved_address') ) |
+            translate}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg_color" fullscreen>
+    <div class="empty-view animate__animated animate__fadeInUp" *ngIf="!isLoading && (!addresses || !addresses.length)">
+        <div style="text-align:center">
+            <img class="light_img" src="assets/images/empty_address.png" alt="no offers" />
+            <img class="dark_img" src="assets/images/empty_address_dark.png" alt="no offers" />
+            <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+            <span style="color:#9E9E9E; font-weight:bold;">
+                {{ (isLoading ? 'loading' : 'empty_addresses') | translate}}
+            </span>
+        </div>
+    </div>
+    <ion-list *ngIf="isLoading" lines="none">
+        <ion-item *ngFor="let address of [1,2,3,4,5,6,7]" class="animate__animated animate__fadeInUp">
+            <div class="item_inner d-flex">
+                <div class="img_box ion-text-center">
+                    <div class="skeleton_img"></div>
+                </div>
+                <div class="text_box">
+                    <h2>
+                        <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                    </h2>
+                    <p>
+                        <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                    </p>
+                </div>
+            </div>
+        </ion-item>
+    </ion-list>
+    <ion-list *ngIf="!isLoading" lines="none">
+        <ion-radio-group value="{{addressIdSelected}}">
+            <ion-item *ngFor="let address of addresses" class="animate__animated animate__fadeInUp"
+                (click)="addressSelected(address)">
+                <div class="item_inner d-flex">
+                    <ion-radio slot="start" value="{{address.id}}"></ion-radio>
+                    <div [ngSwitch]="address.title" class="img_box ion-text-center">
+                        <img src="assets/images/ic_homeadd.png" *ngSwitchCase="'home'">
+                        <img src="assets/images/ic_office.png" *ngSwitchCase="'office'">
+                        <img src="assets/images/ic_other.png" *ngSwitchDefault>
+                    </div>
+                    <div class="text_box">
+                        <h2>{{address.title | translate}}</h2>
+                        <p>
+                            {{address.formatted_address}}
+                        </p>
+                    </div>
+                </div>
+            </ion-item>
+        </ion-radio-group>
+        <!-- <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner d-flex">
+                <div class="img_box ion-text-center">
+                    <img src="assets/images/ic_homeadd.png">
+                </div>
+                <div class="text_box">
+                    <h2>Home</h2>
+                    <p>
+                        Flat num, 114, Frist Floor, Central Residency 1024, Central Residency Hemilton Park, New York, USA
+                    </p>
+                </div>
+            </div>
+        </ion-item>
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner d-flex">
+                <div class="img_box ion-text-center">
+                    <img src="assets/images/ic_office.png">
+                </div>
+                <div class="text_box">
+                    <h2>Office</h2>
+                    <p>
+                        1141, Eight Floor, World Trade Residency Jackson tower, Residency Hemilton Park, New York, USA
+                    </p>
+                </div>
+            </div>
+        </ion-item>
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner d-flex">
+                <div class="img_box ion-text-center">
+                    <img src="assets/images/ic_other.png">
+                </div>
+                <div class="text_box">
+                    <h2>Other</h2>
+                    <p>
+                        Flat num, 114, Frist Floor, Central Residency 1024, Central Residency Hemilton Park, New York, USA
+                    </p>
+                </div>
+            </div>
+        </ion-item> -->
+    </ion-list>
+</ion-content>
+
+<ion-footer class="ion-no-border animate__animated animate__fadeInUp">
+    <ion-button size="large" expand="full" class="btn" (click)="navAddressNew()">+ {{'add_new' | translate}}
+    </ion-button>
+</ion-footer>

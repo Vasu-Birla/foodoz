@@ -1,0 +1,12 @@
+{
+    "android": {
+        "release": {
+            "keystore": "yourkeystorefile.keystore",
+            "storePassword": "YourKeystorePassword",
+            "alias": "YourKeyStoreAlias",
+            "password" : "YourKeystorePassword",
+            "keystoreType": "",
+            "packageType": "apk"
+        }
+    }
+}

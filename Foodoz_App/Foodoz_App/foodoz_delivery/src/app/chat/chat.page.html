@@ -1,0 +1,48 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title></ion-title>
+    </ion-toolbar>
+    <div class="profile_info d-flex">
+        <div class="img_box center_img">
+            <ion-icon class="zmdi zmdi-navigation ion-text-start"></ion-icon>
+        </div>
+        <div class="text_box">
+            <h2>{{chatObj.chatName}}</h2>
+            <h3>{{chatObj.chatStatus | translate}}</h3>
+        </div>
+        <div *ngIf="dialingNumber" class="icon_box end" (click)="dialNo()">
+            <ion-icon class="zmdi zmdi-phone ion-text-end"></ion-icon>
+        </div>
+    </div>
+</ion-header>
+
+<ion-content #myContent fullscreen>
+    <div class="chat_container d-flex">
+        <div *ngFor="let msg of messages"
+            [ngClass]="(chatObj.myId == msg.senderId) ? 'chat_box d-flex send' : 'chat_box d-flex received'"
+            class="animate__animated animate__zoomIn">
+            <div class="chat">
+                <h2>{{msg.body}}</h2>
+                <p>{{msg.timeDiff}}</p>
+            </div>
+        </div>
+    </div>
+</ion-content>
+
+
+<ion-footer class="ion-no-border animate__animated animate__fadeInUp">
+    <div class="form">
+        <ion-list lines="none d-flex">
+            <ion-item lines="none">
+                <ion-textarea rows="1" auto-grow="true" type="text" [(ngModel)]="newMessageText"
+                    placeholder="{{'type_your_meassage' | translate}}"></ion-textarea>
+            </ion-item>
+            <div class="send_btn end" (click)="send()">
+                <ion-icon class="zmdi zmdi-mail-send"></ion-icon>
+            </div>
+        </ion-list>
+    </div>
+</ion-footer>

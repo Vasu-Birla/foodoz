@@ -1,0 +1,50 @@
+<ion-content fullscreen (click)="dismiss()"></ion-content>
+
+<ion-footer class="ion-no-border">
+    <ion-list lines="none">
+        <div class="list_header d-flex animate__animated animate__fadeInUp">
+            <div class="text_box">
+                <h2>{{product.title}}</h2>
+                <h3 class="d-flex">
+                    <img *ngIf="product.meta.food_type == 'veg'" src="assets/images/ic_veg.png">
+                    <img *ngIf="product.meta.food_type != 'veg'" src="assets/images/ic_nonveg.png"> &nbsp;&nbsp;
+                    <span *ngIf="product.sale_priceToShow"
+                        class="d-block priceToShow"><s>{{product.priceToShow}}</s>&nbsp;&nbsp;&nbsp;</span>
+                    <span class="d-block ml-auto">
+                        {{product.sale_priceToShow ? product.sale_priceToShow : product.priceToShow}}
+                    </span>
+                </h3>
+            </div>
+            <h6 class="end" (click)="addChoice()">{{'add' | translate}}</h6>
+        </div>
+        <div class="list_inner">
+            <div *ngFor="let group of product.addon_groups"
+                class="variation-category animate__animated animate__fadeInUp">
+                <h2>{{group.title}}</h2>
+                <ion-radio-group *ngIf="group.min_choices == 1" [(ngModel)]="group.choiceIdSelected"
+                    (ionChange)="radioChange(group, $event)">
+                    <ion-item *ngFor="let cho of group.addon_choices" class="animate__animated animate__fadeInUp">
+                        <div class="item_inner d-flex">
+                            <ion-radio [value]="cho.id"></ion-radio>
+                            <h2 class="d-flex">{{cho.title}} <span class="end">{{cho.priceToShow}}</span></h2>
+                        </div>
+                    </ion-item>
+                </ion-radio-group>
+                <div *ngIf="group.min_choices != 1">
+                    <ion-item *ngFor="let cho of group.addon_choices" class="animate__animated animate__fadeInUp">
+                        <div class="item_inner d-flex">
+                            <ion-checkbox [(ngModel)]="cho.selected"></ion-checkbox>
+                            <h2 class="d-flex">{{cho.title}} <span class="end">{{cho.priceToShow}}</span></h2>
+                        </div>
+                    </ion-item>
+                </div>
+                <!--
+                <ion-item class="animate__animated animate__fadeInUp more">
+                    <div class="item_inner d-flex">
+                        <h2 class="d-flex"><span>{{'more' | translate}}</span></h2>
+                    </div>
+                </ion-item>
+                -->
+            </div>
+        </div>
+    </ion-list>

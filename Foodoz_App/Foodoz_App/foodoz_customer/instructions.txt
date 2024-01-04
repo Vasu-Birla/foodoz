@@ -1,0 +1,25 @@
+Required Dependencies:
+    Node: 12.18.0
+    Ionic: 6.11.0
+    Cordova: 9.0.0
+    Gradle: 6.5
+
+Running/Building Project:
+    Open application directory in terminal and run following commands
+Installing dependencies:
+    Run command "npm install"
+Running project in browser:
+    Run command "ionic serve"
+Preparing platform:
+    Run command "ionic cordova prepare android"
+    Open file build.gradle located in platforms/android/app. VS Code can be used to open this file.
+    Find code bloc starting with "defaultconfig {"
+    Type "multiDexEnabled true" in this code block and save the file
+Running debug build:
+    Run command "ionic cordova run android --prod"
+Building debug build:
+    Run command "ionic cordova build android --prod"
+Building release app:
+    Configure build.json with your signing key and credentials
+    Now run command "ionic cordova build android --prod --release --buildConfig=build.json"
+    

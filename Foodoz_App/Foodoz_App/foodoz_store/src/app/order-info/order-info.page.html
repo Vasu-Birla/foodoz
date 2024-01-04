@@ -1,0 +1,181 @@
+<ion-header [ngClass]="viewType == 'active' ? 'active':''">
+    <ion-toolbar>
+        <ion-buttons slot="start" mode="md">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            <ion-icon class="zmdi zmdi-chevron-down" (click)="setViewType(null)" (click)="setViewTypeB(null)">
+            </ion-icon>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg_color">
+    <div class="customer_info">
+        <ion-item lines="none">
+            <div class="item_inner">
+                <div class="item_info d-flex">
+                    <div class="d-flex">
+                        <div class="item_details">
+                            <h3 class="d-flex">
+                                {{order?.is_guest == 1 ? order.customer_name :order.user.name}}
+                            </h3>
+                            <h4 class="d-flex">{{order?.order_type | translate}} | #{{order?.id}} | {{order?.created_at}}
+                            </h4>
+                        </div>
+                        <div class="icon_box end">
+                            <ion-icon *ngIf="!order.is_guest" class="zmdi zmdi-comment-alt-text ion-text-start" (click)="navChat('customer')">
+                            </ion-icon>
+                            <ion-icon class="zmdi zmdi-phone ion-text-end" (click)="dialCustomer()"></ion-icon>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ion-item>
+    </div>
+
+
+    <ion-list lines="none">
+        <div class="item_list">
+            <h1>{{'items' | translate}}</h1>
+            <ion-item *ngFor="let item of order.products" class="animate__animated animate__fadeInUp">
+                <div class="item_inner">
+                    <div class="text_box">
+                        <div class="d-flex">
+                            <h3 class="d-flex"><img *ngIf="!(item.meta && item.meta.food_type == 'veg_non')" src="assets/images/ic_veg.png">
+                                <img *ngIf="(item.meta && item.meta.food_type == 'veg_non')" src="assets/images/ic_nonveg.png">&nbsp;&nbsp; {{item.vendor_product.product.title}}
+                            </h3>
+                            <div class="end item_price d-flex">
+                                <p> <strong>x{{item.quantity}}</strong> </p>
+                                <h4 class="ion-text-end end">{{item.vendor_product.sale_priceToShow ? item.vendor_product.sale_priceToShow : item.vendor_product.priceToShow}}</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="text_box customise">
+                        <div class="d-flex">
+                            <h3 class="d-flex"><img>&nbsp;&nbsp; Extra Cheese</h3>
+                            <div class="end item_price d-flex">
+                                <h4 class="ion-text-end end">$ 3.00</h4>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div *ngIf="item.addon_choices && item.addon_choices.length" class="text_box customise">
+                        <div *ngFor="let choice of item.addon_choices" class="d-flex customise_inner">
+                            <h3 class="d-flex"><img>&nbsp;&nbsp; {{choice.addon_choice.title}}</h3>
+                            <div class="end item_price d-flex">
+                                <h4 class="ion-text-end end">{{choice.addon_choice.showChoicePrice}}</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+        </div>
+
+        <div class="payment_info">
+            <h1>{{'payment_info' | translate}}</h1>
+            <ion-item *ngIf="order.subtotal_toshow" class="animate__animated animate__fadeInUp">
+                <div class="item_inner">
+                    <h3 class="d-flex">{{'sub_total' | translate}} <span class="end">{{order.subtotal_toshow}}</span>
+                    </h3>
+                </div>
+            </ion-item>
+            <ion-item *ngIf="order.taxes_toshow" class="animate__animated animate__fadeInUp">
+                <div class="item_inner">
+                    <h3 class="d-flex">{{'service_fee' | translate}} <span class="end">{{order.taxes_toshow}}</span>
+                    </h3>
+                </div>
+            </ion-item>
+            <ion-item *ngIf="order.delivery_fee_toshow" class="animate__animated animate__fadeInUp">
+                <div class="item_inner">
+                    <h2 class="d-flex">{{'delivery_fee' | translate}} <span class="end">{{order.delivery_fee_toshow}}</span></h2>
+                </div>
+            </ion-item>
+            <ion-item *ngIf="order.total_toshow" class="animate__animated animate__fadeInUp">
+                <div class="item_inner">
+                    <h2 *ngIf="order.payment && order.payment.payment_method" class="d-flex">
+                        {{order.payment.payment_method.title}}
+                        <span class="end">{{order.total_toshow}}</span>
+                    </h2>
+                    <h2 *ngIf="!order.payment && order.payment.payment_method" class="d-flex">COD
+                        <span class="end">{{order.total_toshow}}</span>
+                    </h2>
+                </div>
+            </ion-item>
+        </div>
+    </ion-list>
+
+    <ion-list class="animate__animated animate__fadeInUp" lines="none" [ngClass]="viewType == 'active' ? 'track_delivery active':'track_delivery'">
+        <ion-item *ngIf="!order.is_guest && order.order_type == 'normal'" class="profile_info">
+            <div class="item_inner d-flex">
+                <div class="img_box center_img" (click)="setViewType('active')">
+                    <img *ngIf="order.delivery != null && order.delivery.delivery != null" [src]="order.delivery.delivery.user.image_url" class="crop_img">
+                    <img *ngIf="!(order.delivery != null && order.delivery.delivery != null)" src="assets/images/empty_dp.png" class="crop_img">
+                </div>
+                <div class="text_box" (click)="setViewType('active')" style="width: 100%;">
+                    <h2 *ngIf="order.delivery != null && order.delivery.delivery != null">
+                        {{order.delivery.delivery.user.name}}</h2>
+                    <h3 *ngIf="order.delivery != null && order.delivery.delivery != null">
+                        {{'delivery_partner' | translate}}</h3>
+
+                    <h2 *ngIf="!(order.delivery != null && order.delivery.delivery != null)">
+                        {{'delivery_partner' | translate}}</h2>
+                    <h3 *ngIf="!(order.delivery != null && order.delivery.delivery != null)">
+                        {{'not_assigned' | translate}}</h3>
+                </div>
+
+                <div class="icon_box end">
+                    <!-- <div class="icon_box_inner">
+                        <ion-icon class="zmdi zmdi-navigation ion-text-end"></ion-icon>
+                    </div> -->
+
+                    <div [ngClass]="viewTypeB == 'active' ? 'icon_box_inner active':'icon_box_inner'">
+                        <!-- <div class="icon_box_end active"> -->
+                        <!-- <ion-icon *ngIf="order.delivery != null && order.delivery.delivery != null"
+                            class="zmdi zmdi-comment-alt-text ion-text-start"
+                            (click)="setViewTypeB('active', 'setview')">
+                        </ion-icon> -->
+                        <ion-icon class="zmdi zmdi-comment-alt-text ion-text-start" (click)="navChat('delivery')">
+                        </ion-icon>
+                        <ion-icon class="zmdi zmdi-close ion-text-start" (click)="setViewTypeB(null)"></ion-icon>
+
+                        <ion-icon *ngIf="order.delivery != null && order.delivery.delivery != null" class="zmdi zmdi-phone ion-text-end" (click)="dialDriver()"></ion-icon>
+                    </div>
+                </div>
+            </div>
+        </ion-item>
+
+        <!-- <div class="map center_img">
+            <img src="assets/images/map.png" class="crop_img">
+            <div class="delivery_location" style="top: 4%; right: 77%; transform: rotate(-164deg);">
+                <img src="assets/images/deliveryman.png">
+            </div>
+            <ion-icon class="zmdi zmdi-pin ion-text-center" style="top: 20%; right: 79%;"></ion-icon>
+            <ion-icon class="zmdi zmdi-navigation ion-text-center" style="top: 36%; right: 35%;"></ion-icon>
+        </div> -->
+        <div #map id="map" class="map">
+            <!-- <ion-spinner></ion-spinner> -->
+        </div>
+        <div #pleaseConnect id="please-connect">
+            <!-- <p>{{'loading' | translate}}</p> -->
+        </div>
+    </ion-list>
+</ion-content>
+
+<ion-footer class="animate__animated animate__animated animate__fadeInUp" [ngClass]="viewTypeB == 'active' ? 'footer active':'footer'">
+    <ion-button *ngIf="order.status != 'new'" size="large" shape="full" class="btn" (click)="checkAndupdateOrder()" [disabled]="!canUpdate">
+        {{ order.status == 'prepared' && order.order_type != 'normal' ? ('order_status_action_mark_complete' | translate) : ('order_status_action_'+order.status) | translate}}
+    </ion-button>
+    <ion-row *ngIf="order.status == 'new'">
+        <ion-col size="6" style="padding: 0px;">
+            <ion-button size="large" shape="full" class="btn" (click)="confirmUpdate('accepted')">
+                {{'order_status_action_new' | translate}}
+            </ion-button>
+        </ion-col>
+        <ion-col size="6" style="padding: 0px;">
+            <ion-button size="large" shape="full" class="btn danger" (click)="confirmUpdate('rejected')">
+                {{'order_status_action_new_reject' | translate}}
+            </ion-button>
+        </ion-col>
+    </ion-row>
+</ion-footer>

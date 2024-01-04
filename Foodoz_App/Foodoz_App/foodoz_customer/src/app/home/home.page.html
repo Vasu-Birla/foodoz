@@ -1,0 +1,220 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            <div class="title_inner d-flex">
+                <div class="form">
+                    <ion-item lines="none">
+                        <div class="item_inner d-flex" (click)="pickLocation()">
+                            <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon>
+                            <h6 *ngIf="selectedLocation != null && selectedLocation.title">{{selectedLocation.title | translate}}
+                            </h6>
+                            <h6 *ngIf="selectedLocation != null && !selectedLocation.title">
+                                {{selectedLocation.formatted_address}}</h6>
+                            <h6 *ngIf="selectedLocation == null">{{'select_location' | translate}}</h6>
+                            <ion-icon class="zmdi zmdi-chevron-down ion-text-end"></ion-icon>
+                        </div>
+                    </ion-item>
+                </div>
+                <!-- <ion-icon class="zmdi zmdi-search ion-text-end end" (click)="navSearch()"></ion-icon>  -->
+                <ion-icon class="zmdi zmdi-search ion-text-end end" (click)="navSearch()"></ion-icon>
+            </div>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+    <div *ngIf="!categories || !categories.length" class="what_do_you_lick animate__animated animate__fadeInUp when_loading">
+        <h2>
+            <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </h2>
+        <div class="category_row">
+            <div *ngFor="let cat of [1,2,3,4,5]" class="category">
+                <div class="img_box center_img">
+                    <div class="skeleton_img"></div>
+                </div>
+                <h3>
+                    <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                </h3>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="categories && categories.length" class="what_do_you_lick animate__animated animate__fadeInUp">
+        <h2>{{'what_do_you_like_to_eat_today' | translate}}?</h2>
+        <div class="category_row">
+            <div *ngFor="let cat of categories" (click)="navStoreDetail(cat)" class="category ion-text-center animate__animated animate__zoomIn">
+                <div class="img_box">
+                    <img [src]="cat.image">
+                </div>
+                <h3>{{cat.title}}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="empty-view animate__animated animate__fadeInUp" *ngIf="!isLoading && haveNothingToShow()">
+        <!-- <div class="empty-view animate__animated animate__fadeInUp"> -->
+        <div style="text-align:center" (click)="pickLocation()">
+            <img src="assets/images/empty_categories.png" alt="no offers" />
+            <span *ngIf="selectedLocation" style="color:#9E9E9E; font-weight:bold;">
+                {{'empty_nothing' | translate}}
+            </span>
+            <span *ngIf="!selectedLocation" style="color:#9E9E9E; font-weight:bold;">
+                {{'Select_your_location_to_continue' | translate}}
+            </span>
+        </div>
+    </div>
+
+
+    <div *ngIf="!bannersToShow || !bannersToShow.length" class="offers_for_you animate__animated animate__fadeInUp when_loading">
+        <h2 class="d-flex">
+            <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+        </h2>
+        <div class="scroll_container">
+            <!-- <div class="offer center_img" *ngFor="let banner of [1,2]">
+                <div class="skeleton_img"></div>
+            </div> -->
+            <ion-slides>
+                <ion-slide class="center_img" *ngFor="let banner of [1]">
+                    <div class="skeleton_img"></div>
+                </ion-slide>
+            </ion-slides>
+        </div>
+    </div>
+    <div *ngIf="bannersToShow && bannersToShow.length" class="offers_for_you animate__animated animate__fadeInUp">
+        <h2 class="d-flex" (click)="offers()">
+            {{'offers_for_you' | translate}}
+            <span class="end">{{'see_all' | translate}}</span>
+        </h2>
+        <div class="scroll_container">
+            <!-- <div class="offer center_img" *ngFor="let banner of bannersToShow" (click)="offers()">
+                <img [src]="banner.image" class="crop_img">
+            </div> -->
+            <ion-slides pager="true" [options]="slideOpts">
+                <ion-slide class="center_img" *ngFor="let banner of bannersToShow" (click)="offers()">
+                    <img [src]="banner.image" class="crop_img">
+                </ion-slide>
+            </ion-slides>
+        </div>
+    </div>
+
+    <!-- <div *ngIf="bannersToShow && bannersToShow.length" class="book_table animate__animated animate__fadeInUp">
+        <ion-row>
+            <ion-col size="6">
+                <div class="option d-flex" (click)="scanBarcode()">
+                    <div class="d-flex" style="width: fit-content; margin: auto;">
+                        <img src="assets/images/ic_scan.png">
+                        <img src="assets/images/ic_scan_dark_theme.png">
+                        <h2>{{'scan_connect' | translate}}</h2>
+                    </div>
+                </div>
+            </ion-col>
+            <ion-col size="6">
+                <div class="option d-flex" (click)="navTableBooking()">
+                    <div class="d-flex" style="width: fit-content; margin: auto;">
+                        <img src="assets/images/ic_tablebooking.png">
+                        <img src="assets/images/ic_tablebooking_dark_theme.png">
+                        <h2>{{'book_a_table' | translate}}</h2>
+                    </div>
+                </div>
+            </ion-col>
+        </ion-row>
+    </div> -->
+
+    <ion-list *ngIf="isLoading && haveNothingToShow()" class="animate__animated animate__fadeInUp when_loading" lines="none">
+
+        <div *ngFor="let catPros of [1,2];">
+            <!-- <h2 class="d-flex">{{catPros.category.title | translate}} <span class="end" (click)="navVieaMap()">{{'view_in_map' | translate}}</span></h2> -->
+            <h2 class="d-flex">
+                <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+            </h2>
+            <div class="scroll_container">
+                <div>
+                    <ion-item class="list_inner" *ngFor="let vendor of [1,2,3,4]">
+                        <div class="item_inner d-flex">
+                            <div class="img_box center_img">
+                                <!-- <img [src]="vendors.image" class="crop_img"> -->
+                                <div class="skeleton_img"></div>
+                            </div>
+                            <div class="text_box">
+                                <h3>
+                                    <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                                </h3>
+                                <h4>
+                                    <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                                </h4>
+                                <h4 class="d-flex">
+                                    <!-- <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon> -->
+                                    <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+                                </h4>
+                            </div>
+                        </div>
+                    </ion-item>
+                </div>
+                <div>
+                    <ion-item class="list_inner" *ngFor="let vendor of [1,2,3,4]">
+                        <div class="item_inner d-flex">
+                            <div class="img_box center_img">
+                                <!-- <img [src]="vendors.image" class="crop_img"> -->
+                                <div class="skeleton_img"></div>
+                            </div>
+                            <div class="text_box">
+                                <h3>
+                                    <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                                </h3>
+                                <h4>
+                                    <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                                </h4>
+                                <h4 class="d-flex">
+                                    <!-- <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon> -->
+                                    <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+                                </h4>
+                            </div>
+                        </div>
+                    </ion-item>
+                </div>
+            </div>
+        </div>
+    </ion-list>
+
+
+    <ion-list *ngFor="let catPros of vendorsArray;" class="animate__animated animate__fadeInUp" lines="none">
+        <!-- <h2 class="d-flex">{{catPros.category.title | translate}} <span class="end" (click)="navVieaMap()">{{'view_in_map' | translate}}</span></h2> -->
+        <h2 class="d-flex">{{catPros.vendorType.title | translate}} <span class="end" (click)="seeAllVerndorType(catPros.vendorType)">{{'see_all' | translate}}</span></h2>
+        <div class="scroll_container">
+            <div>
+                <ion-item class="list_inner" *ngFor="let vendors of catPros.vendors_fir" (click)="navVenDetail(vendors)">
+                    <div class="item_inner d-flex">
+                        <div class="img_box center_img">
+                            <img [src]="vendors.image" class="crop_img">
+                        </div>
+                        <div class="text_box">
+                            <h3>{{vendors.name}}</h3>
+                            <h4>{{vendors.categories_text}}</h4>
+                            <h4 class="d-flex">
+                                <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon>
+                                {{vendors.distance_toshow}} | {{vendors.address}}
+                            </h4>
+                        </div>
+                    </div>
+                </ion-item>
+            </div>
+
+            <div>
+                <ion-item class="list_inner" *ngFor="let vendors of catPros.vendors_sec" (click)="navVenDetail(vendors)">
+                    <div class="item_inner d-flex">
+                        <div class="img_box center_img">
+                            <img [src]="vendors.image" class="crop_img">
+                        </div>
+                        <div class="text_box">
+                            <h3>{{vendors.name}}</h3>
+                            <h4>{{vendors.categories_text}}</h4>
+                            <h4 class="d-flex">
+                                <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon>
+                                {{vendors.distance_toshow}} | {{vendors.address}}
+                            </h4>
+                        </div>
+                    </div>
+                </ion-item>
+            </div>
+        </div>
+    </ion-list>
+
+</ion-content>

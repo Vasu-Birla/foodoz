@@ -1,0 +1,65 @@
+<!--
+<ion-header>
+    <ion-toolbar>
+        <ion-title>table-booking</ion-title>
+    </ion-toolbar>
+</ion-header>
+-->
+
+<ion-content (click)="dismiss()">
+
+</ion-content>
+
+<ion-footer class="ion-no-border">
+    <div class="form">
+        <ion-list lines="none">
+            <h1>{{'table_booking' | translate}}</h1>
+
+            <div class="radio_list">
+                <ion-radio-group class="animate__animated animate__fadeInUp" [(ngModel)]="appointmentRequest.meta.person">
+                    <h2>{{'booking_for' | translate}}</h2>
+                    <div class="scroll-x">
+                        <ion-item *ngFor="let person of persons">
+                            <ion-label>{{person}} {{ (person == 1 ? 'person' : 'persons') | translate}}</ion-label>
+                            <ion-radio slot="start" [value]="person"></ion-radio>
+                        </ion-item>
+                    </div>
+                </ion-radio-group>
+
+                <ion-radio-group class="animate__animated animate__fadeInUp" [(ngModel)]="dateSelected">
+                    <!-- <h2>{{'select_date' | translate}} <span class="end">{{this.dates[0].monthText}}</span></h2> -->
+                    <h2>{{'select_date' | translate}}</h2>
+                    <div class="scroll-x">
+                        <ion-item *ngFor="let d of datesToShow" [ngClass]="(dateSelected == d) ? ' active' : ''" (click)="markSelected(d)">
+                            <ion-label>{{this.dates[0].monthText}} {{ d.getDate()}} </ion-label>
+                            <ion-radio slot="start" [value]="d"></ion-radio>
+                        </ion-item>
+                    </div>
+                </ion-radio-group>
+
+                <ion-radio-group class="animate__animated animate__fadeInUp" [(ngModel)]="appointmentRequest.time_from">
+                    <h2>{{'select_time' | translate}}</h2>
+                    <div class="scroll-x">
+                        <ion-item class="animate__animated animate__zoomIn" *ngFor="let at of availabilityTimes">
+                            <ion-label>{{at.timeValue}}</ion-label>
+                            <ion-radio slot="start" [value]="at.time"></ion-radio>
+                        </ion-item>
+                    </div>
+                </ion-radio-group>
+            </div>
+
+            <div class="add_note animate__animated animate__fadeInUp">
+                <h2>{{'add_note' | translate}}</h2>
+                <ion-item lines="none">
+                    <div class="item_inner">
+                        <div class="input_box">
+                            <ion-textarea rows="3" mode="md" type="text" [(ngModel)]="appointmentRequest.meta.note" placeholder="{{'my_anniversary' | translate}}"></ion-textarea>
+                        </div>
+                    </div>
+                </ion-item>
+            </div>
+
+        </ion-list>
+    </div>
+    <ion-button size="large" shape="full" class="btn animate__animated animate__fadeInUp" (click)="onSubmitRequest()"> {{'book_a_table' | translate}} </ion-button>
+</ion-footer>

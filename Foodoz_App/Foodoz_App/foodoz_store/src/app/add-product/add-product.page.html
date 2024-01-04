@@ -1,0 +1,297 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            <div class="title_inner d-flex">
+                {{'add_product' | translate}}
+
+                <div class="toggle_box in_stock end">
+                    <span>{{'in_stock' | translate}}</span>&nbsp;&nbsp;
+                    <ion-toggle checked mode="ios"></ion-toggle>
+                </div>
+            </div>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg_color" fullscreen>
+    <ion-list lines="none">
+        <ion-item class="animate__animated animate__fadeInUp feature_image">
+            <div class="item_inner">
+                <h2> {{'item_image' | translate}}</h2>
+                <div class="d-flex" style="align-items: flex-start;">
+                    <div class="img_box center_img">
+                        <img src="assets/images/placeholder.png" class="crop_img">
+                        <!--                        <img src="assets/images/food_1.png" class="crop_img">-->
+                    </div>
+                    <h3 class="d-flex">
+                        <ion-icon class="zmdi zmdi-camera ion-text-start"></ion-icon>
+                        {{'upload_photo' | translate}}
+                    </h3>
+                </div>
+            </div>
+        </ion-item>
+
+        <div class="form animate__animated animate__fadeInUp">
+            <h2>{{'item_info' | translate}}</h2>
+
+            <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                <div class="item_inner d-flex">
+                    <div class="input_box">
+                        <!--                        <ion-label mode="md" position="stacked">{{"item_title" | translate}}</ion-label>-->
+                        <ion-input mode="md" type="name" placeholder="{{'item_title' | translate}}"></ion-input>
+                    </div>
+                </div>
+            </ion-item>
+
+            <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                <div class="item_inner d-flex">
+                    <div class="input_box">
+<!--                        <ion-label mode="md" position="stacked">{{"item_category" | translate}}</ion-label>-->
+                        <div class="d-flex" style="align-items: flex-end;">
+                            <ion-select placeholder="{{'item_category' | translate}}">
+                                <ion-select-option value="1">Fast Food</ion-select-option>
+                                <ion-select-option value="2">Starter</ion-select-option>
+                                <ion-select-option value="3">Main Course</ion-select-option>
+                                <ion-select-option value="4">Dessert</ion-select-option>
+                            </ion-select>
+
+                            <ion-icon class="zmdi zmdi-chevron-down ion-text-end end"></ion-icon>
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+
+            <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                <div class="item_inner d-flex">
+                    <div class="input_box">
+                        <!--                        <ion-label mode="md" position="stacked">{{"item_price" | translate}}</ion-label>-->
+                        <ion-input mode="md" type="name" placeholder="{{'item_price' | translate}}"></ion-input>
+                    </div>
+                </div>
+            </ion-item>
+        </div>
+
+        <div class="form food_type animate__animated animate__fadeInUp">
+            <h2>{{'food_type' | translate}}</h2>
+            <ion-radio-group>
+                <ion-row>
+                    <ion-col size="5">
+                        <ion-item lines="none">
+                            <div class="item_inner d-flex">
+                                <ion-radio value="veg"></ion-radio>
+                                <h3>{{"veg" | translate}}</h3>
+                            </div>
+                        </ion-item>
+                    </ion-col>
+
+                    <ion-col size="5">
+                        <ion-item lines="none">
+                            <div class="item_inner d-flex">
+                                <ion-radio value="non_veg"></ion-radio>
+                                <h3>{{"non_veg" | translate}}</h3>
+                            </div>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-radio-group>
+        </div>
+
+        <div class="form add_specification animate__animated animate__fadeInUp">
+            <h2>{{'add_specification' | translate}}</h2>
+            <ion-row class="animate__animated animate__fadeInUp">
+                <ion-col size="6">
+                    <ion-item lines="none">
+                        <div class="item_inner d-flex">
+                            <div class="input_box">
+                                <ion-label mode="md" position="stacked">{{"option_title" | translate}}</ion-label>
+                                <ion-input mode="md" type="name" placeholder="{{'enter_option_title' | translate}}"></ion-input>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-col>
+
+                <ion-col size="6">
+                    <ion-item lines="none">
+                        <div class="item_inner d-flex">
+                            <div class="input_box">
+                                <ion-label mode="md" position="stacked" class="ion-text-end">{{"price" | translate}}</ion-label>
+                                <ion-input mode="md" type="name" class="ion-text-end" placeholder="{{'enter_price' | translate}}"></ion-input>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+<!--
+            <ion-row class="animate__animated animate__fadeInUp">
+                <ion-col size="6">
+                    <ion-item lines="none">
+                        <div class="item_inner d-flex">
+                            <div class="input_box">
+                                <ion-input mode="md" type="name" placeholder="{{'enter_option_title' | translate}}" value="Extra Mayones"></ion-input>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-col>
+
+                <ion-col size="6">
+                    <ion-item lines="none">
+                        <div class="item_inner d-flex">
+                            <div class="input_box">
+                                <ion-input mode="md" type="name" class="ion-text-end" placeholder="{{'enter_price' | translate}}" value="$ 2.00"></ion-input>
+                            </div>
+                        </div>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+-->
+            <h6 class="ion-text-end">+ {{"add_more_option" | translate}}</h6>
+        </div>
+
+        <div class="form food_type animate__animated animate__fadeInUp">
+            <h2 style="text-transform: initial;">{{'do_you_have_emenu_app' | translate}}?</h2>
+            <ion-radio-group>
+                <ion-row>
+                    <ion-col size="5">
+                        <ion-item lines="none">
+                            <div class="item_inner d-flex">
+                                <ion-radio value="yes"></ion-radio>
+                                <h3>{{"yes" | translate}}</h3>
+                            </div>
+                        </ion-item>
+                    </ion-col>
+
+                    <ion-col size="5">
+                        <ion-item lines="none">
+                            <div class="item_inner d-flex">
+                                <ion-radio value="no"></ion-radio>
+                                <h3>{{"no" | translate}}</h3>
+                            </div>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-radio-group>
+        </div>
+
+        <div class="form  description animate__animated animate__fadeInUp">
+            <h2>{{'add_description' | translate}}</h2>
+            <ion-item lines="none">
+                <div class="item_inner d-flex">
+                    <div class="input_box">
+                        <!--                        <ion-label mode="md" position="stacked">{{"option_title" | translate}}</ion-label>-->
+                        <ion-textarea rows="1" auto-grow="true" mode="md" type="text" placeholder="{{'add_description' | translate}}"></ion-textarea>
+                    </div>
+                </div>
+            </ion-item>
+        </div>
+ 
+        <div class="form add_ingredients add_specification  animate__animated animate__fadeInUp">
+            <h2>{{'ingredients' | translate}}</h2>
+            <ion-item lines="none">
+                <div class="item_inner ">
+<!--
+                    <div class="ingredients">
+                        <p class="d-flex">
+                            Flour <ion-icon class="zmdi zmdi-tag-close ion-text-end"></ion-icon>
+                        </p>
+                        <p class="d-flex">
+                            Sugar <ion-icon class="zmdi zmdi-tag-close ion-text-end"></ion-icon>
+                        </p>
+                        <p class="d-flex">
+                            Baking Powder <ion-icon class="zmdi zmdi-tag-close ion-text-end"></ion-icon>
+                        </p>
+                        <p class="d-flex">
+                            Salt <ion-icon class="zmdi zmdi-tag-close ion-text-end"></ion-icon>
+                        </p>
+                    </div>
+-->
+                    
+                    <div class="input_box">
+<!--                                                <ion-label mode="md" position="stacked">{{"option_title" | translate}}</ion-label>-->
+                        <ion-input mode="md" type="name" placeholder="{{'add_ingredient' | translate}}"></ion-input>
+                    </div>
+
+                </div>
+            </ion-item>
+            <h6 class="ion-text-end">+ {{"add_more_option" | translate}}</h6>
+        </div>
+
+        <div class="form item_video  animate__animated animate__fadeInUp">
+            <h2>{{'item_video' | translate}}</h2>
+            <ion-item lines="none">
+                <div class="item_inner d-flex">
+                    <ion-icon class="zmdi zmdi-upload ion-text-start"></ion-icon>
+                    <h5>{{"upload_video" | translate}}</h5>
+                </div>
+            </ion-item>
+
+        </div>
+
+        <div class="form animate__animated animate__fadeInUp">
+            <h2>{{'more_info' | translate}}</h2>
+            <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                <div class="item_inner d-flex">
+                    <div class="input_box">
+                        <!--                        <ion-label mode="md" position="stacked">{{"servings_for" | translate}}</ion-label>-->
+                        <div class="d-flex" style="align-items: flex-end;">
+                            <ion-select  placeholder="{{'servings_for' | translate}}">
+                                <ion-select-option value="1">1 People Serving</ion-select-option>
+                                <ion-select-option value="2">2 People Serving</ion-select-option>
+                                <ion-select-option value="3">3 People Serving</ion-select-option>
+                                <ion-select-option value="4">4 People Serving</ion-select-option>
+                                <ion-select-option value="4">5 People Serving</ion-select-option>
+                            </ion-select>
+
+                            <ion-icon class="zmdi zmdi-chevron-down ion-text-end end"></ion-icon>
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+
+            <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                <div class="item_inner d-flex">
+                    <div class="input_box">
+                        <!--                        <ion-label mode="md" position="stacked">{{"cooking_time" | translate}}</ion-label>-->
+                        <div class="d-flex" style="align-items: flex-end;">
+                            <ion-select  placeholder="{{'cooking_time' | translate}}">
+                                <ion-select-option value="1">5 min</ion-select-option>
+                                <ion-select-option value="2">10 min</ion-select-option>
+                                <ion-select-option value="3">12 min</ion-select-option>
+                                <ion-select-option value="4">15 min</ion-select-option>
+                                <ion-select-option value="5">20 min</ion-select-option>
+                            </ion-select>
+
+                            <ion-icon class="zmdi zmdi-chevron-down ion-text-end end"></ion-icon>
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+
+            <ion-item class="animate__animated animate__fadeInUp" lines="none">
+                <div class="item_inner d-flex">
+                    <div class="input_box">
+                        <!--                        <ion-label mode="md" position="stacked">{{"energy" | translate}}</ion-label>-->
+                        <div class="d-flex" style="align-items: flex-end;">
+                            <ion-select  placeholder="{{'energy' | translate}}">
+                                <ion-select-option value="1">227 (kcal)</ion-select-option>
+                                <ion-select-option value="2">250 (kcal)</ion-select-option>
+                                <ion-select-option value="3">300 (kcal)</ion-select-option>
+                                <ion-select-option value="4">350 (kcal)</ion-select-option>
+                                <ion-select-option value="5">400 (kcal)</ion-select-option>
+                                <ion-select-option value="6">450 (kcal)</ion-select-option>
+                            </ion-select>
+
+                            <ion-icon class="zmdi zmdi-chevron-down ion-text-end end"></ion-icon>
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+        </div>
+    </ion-list>
+</ion-content>
+
+<ion-footer class="ion-no-border animate__animated animate__fadeInUp">
+    <ion-button size="large" expand="full" class="btn">{{'add_product' | translate}}</ion-button>
+</ion-footer>

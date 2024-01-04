@@ -1,0 +1,128 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>{{'my_account' | translate}}</ion-title>
+    </ion-toolbar>
+    <div *ngIf="userMe" class="profile_info">
+        <h2>{{userMe.name}}</h2>
+        <p>{{userMe.mobile_number}}</p>
+        <p>{{userMe.email}}</p>
+    </div>
+    <div *ngIf="!userMe" class="profile_info" (click)="login()">
+        <h2>{{'hey_guest' | translate}}</h2>
+        <p [innerHTML]="'alert_login_msg' | translate"></p>
+    </div>
+    <div class="buy_this_app end" (click)="buyAppAction()" *ngIf="config.demoMode">
+        <h2>
+            <!--                        <ion-icon class="zmdi zmdi-shopping-cart"></ion-icon>-->
+            {{"buy_this_app" | translate}}
+        </h2>
+    </div>
+</ion-header>
+
+<ion-content fullscreen>
+
+
+    <ion-list lines="none">
+        <ion-item class="animate__animated animate__fadeInUp" (click)="wallet()">
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_wallet.png">
+                </div>
+                <h2>{{'wallet' | translate}}</h2>
+            </div>
+        </ion-item>
+
+        <ion-item class="animate__animated animate__fadeInUp" (click)="saved_addresses()">
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_addressact.png">
+                </div>
+                <h2>{{'saved_address' | translate}}</h2>
+            </div>
+        </ion-item>
+
+        <ion-item class="animate__animated animate__fadeInUp" (click)="favorites()">
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_favorite.png">
+                </div>
+                <h2>{{'favorites' | translate}}</h2>
+            </div>
+        </ion-item>
+
+        <ion-item class="animate__animated animate__fadeInUp" (click)="terms_conditions()">
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_tncact.png">
+                </div>
+                <h2>{{'terms_conditions' | translate}}</h2>
+            </div>
+        </ion-item>
+
+        <ion-item class="animate__animated animate__fadeInUp" (click)="support()">
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_supportact.png">
+                </div>
+                <h2>{{'support' | translate}}</h2>
+            </div>
+        </ion-item>
+
+        <!--
+        <ion-item class="animate__animated animate__fadeInUp" (click)="about_us()">
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_aboutact.png">
+                </div>
+                <h2>{{'about_us' | translate}}</h2>
+            </div>
+        </ion-item>
+-->
+
+        <ion-item class="animate__animated animate__fadeInUp" (click)="settings()">
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_setting.png">
+                </div>
+                <h2>{{'settings' | translate}}</h2>
+            </div>
+        </ion-item>
+
+        <ion-item *ngIf="userMe" class="animate__animated animate__fadeInUp" (click)="logout()">
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_logoutact.png">
+                </div>
+                <h2>{{'logout' | translate}}</h2>
+            </div>
+        </ion-item>
+
+        <ion-item *ngIf="userMe" class="animate__animated animate__fadeInUp" (click)="confirmDelete()">
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_deleteaccount.png">
+                </div>
+                <h2>{{'delete_account' | translate}}</h2>
+            </div>
+        </ion-item>
+
+        <ion-item *ngIf="!userMe" class="animate__animated animate__fadeInUp" (click)="login()">
+            <div class="item_inner d-flex">
+                <div class="icon_box ion-text-start">
+                    <img src="assets/images/ic_menu_logoutact.png">
+                </div>
+                <h2>{{'login' | translate}}</h2>
+            </div>
+        </ion-item>
+    </ion-list>
+</ion-content>
+
+<ion-footer class="ion-no-border animate__animated animate__fadeInUp">
+    <div class="developed_by d-flex" (click)="developed_by()" *ngIf="config.demoMode">
+        <h2>{{"developed_by" | translate}}</h2>
+        <div class="img_box end">
+            <img src="assets/images/VT_black_logo.png" class="light-theme-logo">
+            <img src="assets/images/vt_white.png" class="dark-theme-logo">
+        </div>
+    </div>
+</ion-footer>

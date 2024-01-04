@@ -1,0 +1,152 @@
+{
+    "name": "vtlabs/kabra",
+    "description": "Kabra Ecommerce",
+    "type": "project",
+    "keywords": [
+        "php",
+        "framework",
+        "laravel"
+    ],
+    "homepage": "http://verbosetechlabs.com/",
+    "authors": [
+        {
+            "name": "Ujjwal Wahi",
+            "email": "support@verbosetechlabs.com",
+            "homepage": "http://verbosetechalabs.com"
+        }
+    ],
+    "support": {
+        "email": "support@verbosetechlabs.com"
+    },
+    "repositories": [
+        {
+            "url": "https://github.com/ujjwalwahi/telescope.git",
+            "type": "git"
+        },
+        {
+            "url": "https://github.com/ujjwalwahi/rating.git",
+            "type": "git"
+        },
+        {
+            "url": "https://github.com/ujjwalwahi/laravel-favorite.git",
+            "type": "git"
+        },
+        {
+            "url": "https://github.com/ujjwalwahi/plans.git",
+            "type": "git"
+        },
+        {
+            "url": "https://github.com/ujjwalwahi/laravel-dotenv-editor.git",
+            "type": "git"
+        },
+        {
+            "url": "https://gitlab.com/vtlabs/php-packages/laravel-artisan.git",
+            "type": "gitlab"
+        },
+        {
+            "url": "https://gitlab.com/vtlabs/php-packages/laravel-artisan.git",
+            "type": "gitlab"
+        },
+        {
+            "url": "https://gitlab.com/vtlabs/php-packages/laravel-core.git",
+            "type": "gitlab"
+        },
+        {
+            "url": "https://gitlab.com/vtlabs/php-packages/laravel-category.git",
+            "type": "gitlab"
+        },
+        {
+            "url": "https://gitlab.com/vtlabs/php-packages/laravel-banners.git",
+            "type": "gitlab"
+        },
+        {
+            "url": "https://gitlab.com/vtlabs/php-packages/laravel-support.git",
+            "type": "gitlab"
+        },
+        {
+            "url": "https://gitlab.com/vtlabs/php-packages/laravel-faq.git",
+            "type": "gitlab"
+        },
+        {
+            "url": "https://gitlab.com/vtlabs/php-packages/laravel-ecommerce.git",
+            "type": "gitlab"
+        },
+        {
+            "url": "https://gitlab.com/vtlabs/php-packages/laravel-payments.git",
+            "type": "gitlab"
+        },
+        {
+            "url": "https://gitlab.com/vtlabs/php-packages/laravel-appointments.git",
+            "type": "gitlab"
+        },
+        {
+            "url": "https://gitlab.com/vtlabs/php-packages/laravel-report.git",
+            "type": "gitlab"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "laravel/framework": "^6.0",
+        "laravel/helpers": "^1.1",
+        "laravel/socialite": "^4.0",
+        "laravel/telescope": "^3.2",
+        "laravel/tinker": "~2.0",
+        "laravelcollective/html": "^6.0",
+        "maatwebsite/excel": "^3.1",
+        "spatie/laravel-cors": "^1.6",
+        "vtlabs/core": "^1.1",
+        "vtlabs/ecommerce": "v3.x-dev"
+    },
+    "require-dev": {
+        "fzaninotto/faker": "~1.4",
+        "mockery/mockery": "0.9.*",
+        "phpunit/phpunit": "~6.0",
+        "barryvdh/laravel-debugbar": "^3.2",
+        "barryvdh/laravel-ide-helper": "^2.2",
+        "doctrine/dbal": "^2.5",
+        "filp/whoops": "~2.0"
+    },
+    "autoload": {
+        "classmap": [
+            "database"
+        ],
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "app/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "php artisan key:generate"
+        ],
+        "post-install-cmd": [
+            "Illuminate\\Foundation\\ComposerScripts::postInstall"
+        ],
+        "post-update-cmd": [
+            "Illuminate\\Foundation\\ComposerScripts::postUpdate"
+        ],
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover"
+        ]
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "gitlab-oauth": {
+            "gitlab.com": "XRfxX83LqP4zFBYYxmBF"
+        }
+    },
+    "prefer-stable": true
+}

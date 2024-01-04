@@ -1,0 +1,93 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            {{'authentication' | translate}}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg_color" fullscreen>
+    <div *ngIf="!isLoading" [formGroup]="authenticationForm" class="form">
+        <ion-card formArrayName="kitchenArray" class="animate__animated animate__fadeInUp">
+            <h2>{{'kitchecn_app' | translate}}</h2>
+            <ion-list lines="none">
+                <ion-item *ngFor="let item of authenticationForm.controls.kitchenArray['controls']; let i = index;" [formGroupName]="i" lines="none" class="animate__animated animate__fadeInUp">
+                    <div class="item_inner d-flex">
+                        <div class="input_box d-flex">
+                            <ion-input mode="md" type="tel" placeholder="{{'enter_phone_number' | translate}}" formControlName="identifier"></ion-input>
+                            <ion-icon *ngIf="authenticationForm['controls'].kitchenArray['controls'].length > 1" (click)="deleteForm(i,authenticationForm['controls'].kitchenArray)" class="zmdi zmdi-close ion-text-end"></ion-icon>
+                        </div>
+                    </div>
+                </ion-item>
+            </ion-list>
+            <h6 class="ion-text-end" (click)="addKitchenForm()">+ {{"add_more_option" | translate}}</h6>
+        </ion-card>
+
+        <ion-card formArrayName="kioskArray" class="animate__animated animate__fadeInUp">
+            <h2>{{'kiosk_app' | translate}}</h2>
+            <ion-list lines="none">
+                <ion-item *ngFor="let item of authenticationForm.controls.kioskArray['controls']; let i = index;" [formGroupName]="i" lines="none" class="animate__animated animate__fadeInUp">
+                    <div class="item_inner d-flex">
+                        <div class="input_box d-flex">
+                            <ion-input mode="md" type="tel" placeholder="{{'enter_phone_number' | translate}}" formControlName="identifier"></ion-input>
+                            <ion-icon *ngIf="authenticationForm['controls'].kioskArray['controls'].length > 1" (click)="deleteForm(i,authenticationForm['controls'].kioskArray)" class="zmdi zmdi-close ion-text-end"></ion-icon>
+                        </div>
+                    </div>
+                </ion-item>
+            </ion-list>
+            <h6 class="ion-text-end" (click)="addKioskForm()">+ {{"add_more_option" | translate}}</h6>
+        </ion-card>
+
+        <ion-card formArrayName="emenuArray" class="animate__animated animate__fadeInUp">
+            <h2>{{'emenu_app' | translate}}</h2>
+            <ion-list lines="none">
+                <ion-item *ngFor="let item of authenticationForm.controls.emenuArray['controls']; let i = index;" [formGroupName]="i" lines="none" class="animate__animated animate__fadeInUp">
+                    <div class="item_inner d-flex">
+                        <div class="input_box d-flex">
+                            <ion-input mode="md" type="tel" placeholder="{{'enter_phone_number' | translate}}" formControlName="identifier"></ion-input>
+                            <ion-icon *ngIf="authenticationForm['controls'].emenuArray['controls'].length > 1" (click)="deleteForm(i,authenticationForm['controls'].emenuArray)" class="zmdi zmdi-close ion-text-end"></ion-icon>
+                        </div>
+                    </div>
+                </ion-item>
+            </ion-list>
+            <h6 class="ion-text-end" (click)="addEmenuForm()">+ {{"add_more_option" | translate}}</h6>
+        </ion-card>
+
+        <ion-card formArrayName="reviewArray" class="animate__animated animate__fadeInUp">
+            <h2>{{'review_app' | translate}}</h2>
+            <ion-list lines="none">
+                <ion-item *ngFor="let item of authenticationForm.controls.reviewArray['controls']; let i = index;" [formGroupName]="i" lines="none" class="animate__animated animate__fadeInUp">
+                    <div class="item_inner d-flex">
+                        <div class="input_box d-flex">
+                            <ion-input mode="md" type="tel" placeholder="{{'enter_phone_number' | translate}}" formControlName="identifier"></ion-input>
+                            <ion-icon *ngIf="authenticationForm['controls'].reviewArray['controls'].length > 1" (click)="deleteForm(i,authenticationForm['controls'].reviewArray)" class="zmdi zmdi-close ion-text-end"></ion-icon>
+                        </div>
+                    </div>
+                </ion-item>
+            </ion-list>
+            <h6 class="ion-text-end" (click)="addReviewForm()">+ {{"add_more_option" | translate}}</h6>
+        </ion-card>
+
+        <ion-card formArrayName="deskArray" class="animate__animated animate__fadeInUp">
+            <h2>{{'desk_app' | translate}}</h2>
+            <ion-list lines="none">
+                <ion-item *ngFor="let item of authenticationForm.controls.deskArray['controls']; let i = index;" [formGroupName]="i" lines="none" class="animate__animated animate__fadeInUp">
+                    <div class="item_inner d-flex">
+                        <div class="input_box d-flex">
+                            <ion-input mode="md" type="tel" placeholder="{{'enter_phone_number' | translate}}" formControlName="identifier"></ion-input>
+                            <ion-icon *ngIf="authenticationForm['controls'].deskArray['controls'].length > 1" (click)="deleteForm(i,authenticationForm['controls'].deskArray)" class="zmdi zmdi-close ion-text-end"></ion-icon>
+                        </div>
+                    </div>
+                </ion-item>
+            </ion-list>
+            <h6 class="ion-text-end" (click)="addDeskForm()">+ {{"add_more_option" | translate}}</h6>
+        </ion-card>
+    </div>
+</ion-content>
+
+<ion-footer class="ion-no-border animate__animated animate__fadeInUp">
+    <ion-button size="large" expand="full" class="btn" (click)="onSubmitAuthentication()">{{'save' | translate}}</ion-button>
+</ion-footer>

@@ -1,0 +1,219 @@
+ion-list {
+    background: none;
+    margin: 0;
+    padding: 0;
+    margin-top: 8px;
+
+    ion-item {
+        --inner-padding-end: 0px;
+        --inner-min-height: unset !important;
+        --padding-start: 0;
+        --background: var(--transparent) !important;
+        background: var(--white);
+        padding: 16px 20px;
+        margin-bottom: 8px;
+        min-height: 111px;
+
+        .item_inner {
+            position: relative;
+
+            &::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 70px;
+                bottom: 0;
+                margin: auto 0;
+                width: 1px;
+                height: calc(100% - 10px);
+                background: #F1F1F1;
+            }
+
+            .img_box {
+                min-width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                background: var(--bg-color);
+                display: flex;
+                align-items: center;
+                margin-right: 30px;
+
+                img {
+                    width: 35px;
+                    display: block;
+                    margin: 0 auto;
+                }
+            }
+
+            .text_box {
+                width: 100%;
+
+                h2 {
+                    margin: 0;
+                    color: var(--primary);
+                    font-size: 1.1rem;
+                    font-weight: 600;
+                    padding-bottom: 5px;
+
+                }
+
+                p {
+                    margin: 0;
+                    font-size: 0.81rem;
+                    line-height: 18px;
+                    color: var(--text-black);
+                    font-weight: 400;
+
+                }
+            }
+        }
+        ion-radio {
+            position: absolute;
+            z-index: 999;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            --color: var(--transparent) !important;
+            --color-checked: var(--transparent) !important;
+        }
+        &.item-radio-checked {
+            border-color: var(--primary) !important;
+
+            &::before {
+                width: 100%;
+                height: 100%;
+            }
+
+            ion-label {
+                .img_container {
+                    .img_box {
+                        img {
+                            &:nth-child(even) {
+                                width: 100%;
+                                height: auto;
+                            }
+
+                            &:nth-child(odd) {
+                                width: 0;
+                                height: 0;
+                            }
+                        }
+                    }
+
+                    h2 {
+                        color: var(--white);
+                    }
+                }
+
+                p {
+                    color: var(--white);
+                    font-weight: 400;
+                }
+            }
+        }
+    }
+}
+
+.animate__animated {
+    &:nth-child(1) {
+        --animate-duration: .15s;
+    }
+
+    &:nth-child(2) {
+        --animate-duration: .2s;
+    }
+
+    &:nth-child(3) {
+        --animate-duration: .25s;
+    }
+
+    &:nth-child(4) {
+        --animate-duration: .3s;
+    }
+
+    &:nth-child(5) {
+        --animate-duration: .35s;
+    }
+
+    &:nth-child(6) {
+        --animate-duration: .4s;
+    }
+
+    &:nth-child(7) {
+        --animate-duration: .45s;
+    }
+
+    &:nth-child(8) {
+        --animate-duration: .5s;
+    }
+
+    &:nth-child(9) {
+        --animate-duration: .55s;
+    }
+
+    &:nth-child(10) {
+        --animate-duration: .6s;
+    }
+
+    &:nth-child(11) {
+        --animate-duration: .65s;
+    }
+
+    &:nth-child(12) {
+        --animate-duration: .7s;
+    }
+
+    &:nth-child(13) {
+        --animate-duration: .5s;
+    }
+
+    &:nth-child(14) {
+        --animate-duration: .5s;
+    }
+
+    &:nth-child(15) {
+        --animate-duration: .5s;
+    }
+}
+
+ion-footer {
+    --animate-duration: .4s;
+
+    ion-button {
+        --background: var(--white);
+        color: var(--primary);
+        font-weight: 500;
+
+        &:hover:not(.disable-hover) {
+            --background: var(--white);
+        }
+    }
+}
+.empty-view {
+    width: 200px;
+    margin: auto;
+    height: 200px;
+    top: 10%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 10%;
+
+    img {
+        width: 100px;
+        margin: auto;
+    }
+
+    span {
+        display: block;
+        text-align: center;
+    }
+
+    button {
+        margin-top: 50px;
+
+        span {
+            display: unset !important;
+        }
+    }
+}

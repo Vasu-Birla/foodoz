@@ -1,0 +1,63 @@
+<ion-header>
+    <ion-toolbar>
+        <div class="toolbar_inner d-flex">
+            <ion-buttons slot="start" mode="md">
+                <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+            </ion-buttons>
+            <ion-title>
+                <div class="title_inner">
+                    {{'select_payment_method' | translate}}
+                    <h4>{{'amount_to_pay' | translate}} {{currency_icon}}{{eComService.getCartTotal(true)}}</h4>
+                </div>
+            </ion-title>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="bg_color">
+    <div class="empty-view" *ngIf="!isLoading && (!paymentMethods || !paymentMethods.length)">
+        <div style="text-align:center">
+            <img class="light_img" src="assets/images/empty_orders.png" alt="no offers" />
+            <img class="dark_img" src="assets/images/empty_orders.png" alt="no offers" />
+            <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+            <span style="color:#9E9E9E; font-weight:bold;">
+                {{(isLoading ? 'loading' : 'empty_paymentmethods') | translate}}
+            </span>
+        </div>
+    </div>
+    <ion-list *ngIf="isLoading" lines="none">
+        <ion-item *ngFor="let pm of [1,2,3,4,5,6]" class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <div class="payment_option d-flex">
+                    <h3 class="d-flex">
+                        <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                    </h3>
+                </div>
+            </div>
+        </ion-item>
+    </ion-list>
+    <ion-list *ngIf="!isLoading" lines="none">
+        <ion-radio-group value="{{paymentMethoIdSelected}}" (ionChange)="onPaymentMethodSelected($event)">
+            <ion-item *ngFor="let pm of paymentMethods" class="animate__animated animate__fadeInUp">
+                <div class="item_inner">
+                    <div class="payment_option d-flex">
+                        <ion-radio slot="start" value="{{pm.id}}"></ion-radio>
+                        <h3 class="d-flex">
+                            {{pm.title}}
+                        </h3>
+                    </div>
+                </div>
+            </ion-item>
+        </ion-radio-group>
+    </ion-list>
+</ion-content>
+<ion-footer class="ion-no-border">
+    <h2 class="d-flex" (click)="confirmOrder()">
+        {{'order_place' | translate}}
+        <span class="end">
+            <small class="ion-text-start">{{'total' | translate}}</small>
+            {{currency_icon}}{{eComService.getCartTotal(true)}}
+            <ion-icon class="zmdi zmdi-chevron-right ion-text-end"></ion-icon>
+        </span>
+    </h2>
+</ion-footer>

@@ -1,0 +1,83 @@
+<ion-header class="bg_transparent">
+    <ion-toolbar>
+        <ion-buttons slot="start" mode="md">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title></ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+    <div class="banner animate__animated animate__zoomInUp">
+        <div class="logo ion-text-center">
+            <img src="assets/images/logo.png" class="light_theme_logo">
+            <img src="assets/images/logo_user_dark.png" class="dark_theme_logo">
+        </div>
+        <!--        <h2 class="ion-text-center"><strong>{{'delivering_almost' | translate}}</strong> {{'everything' | translate}}</h2>-->
+    </div>
+</ion-content>
+
+<ion-footer class="ion-no-border animate__animated animate__fadeInUp">
+    <div class="footer_banner">
+        <div class="img_box">
+            <img src="assets/images/login_image.png">
+        </div>
+    </div>
+    <div class="form animate__animated animate__fadeInUp">
+        <ion-list lines="none">
+            <ion-item lines="none">
+                <div class="item_inner d-flex">
+                    <h3 *ngIf="countryCode" (click)="navSelectCountry()">+{{countryCode}}&nbsp;</h3>
+                    <ion-input #inputPhone mode="md" type="tel" [(ngModel)]="phoneNumber"
+                        placeholder="{{phoneNumberHint}}" (ionFocus)="checkForCountryCode()">
+                    </ion-input>
+                    <ion-button size="large" class="btn end animate__animated animate__zoomInUp" (click)="alertPhone()">
+                        {{'continue' | translate}}</ion-button>
+                </div>
+            </ion-item>
+        </ion-list>
+    </div>
+    <div *ngIf="isSocialAuthEnabled()" class="social_login">
+        <h3 class="ion-text-center">{{'or' | translate}}</h3>
+        <div *ngIf="platformIos" class="button_container">
+            <div *ngIf="config.fireConfig.enableSocialAuthApple"
+                class="btn Apple d-flex animate__animated animate__fadeInUp">
+                <div class="img_box ion-text-center" (click)="signInApple()">
+                    <img src="assets/images/ic_login_apple.png">
+                </div>
+                <h6>{{'login_with' | translate}} <strong>Apple</strong></h6>
+            </div>
+            <div *ngIf="config.fireConfig.enableSocialAuthGoogle"
+                class="btn d-flex Google animate__animated animate__fadeInUp" (click)="signInGoogle()">
+                <div class="img_box ion-text-center">
+                    <img src="assets/images/ic_login_google.png">
+                </div>
+                <h6>{{'login_with' | translate}} <strong>Google</strong></h6>
+            </div>
+            <div *ngIf="config.fireConfig.enableSocialAuthFacebook"
+                class="btn Facebook d-flex animate__animated animate__fadeInUp" (click)="signInFacebook()">
+                <div class="img_box ion-text-center">
+                    <img src="assets/images/ic_login_facebook.png">
+                </div>
+                <h6>{{'login_with' | translate}} <strong>Facebook</strong></h6>
+            </div>
+        </div>
+        <div *ngIf="!platformIos" class="button_container">
+            <div *ngIf="config.fireConfig.enableSocialAuthGoogle"
+                class="btn d-flex Google animate__animated animate__fadeInUp" (click)="signInGoogle()">
+                <div class="img_box ion-text-center">
+                    <img src="assets/images/ic_login_google.png">
+                </div>
+                <h6>{{'login_with' | translate}} <strong>Google</strong></h6>
+            </div>
+            <div *ngIf="config.fireConfig.enableSocialAuthFacebook"
+                class="btn Facebook d-flex animate__animated animate__fadeInUp" (click)="signInFacebook()">
+                <div class="img_box ion-text-center">
+                    <img src="assets/images/ic_login_facebook.png">
+                </div>
+                <h6>{{'login_with' | translate}} <strong>Facebook</strong></h6>
+            </div>
+
+        </div>
+    </div>
+</ion-footer>

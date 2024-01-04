@@ -1,0 +1,157 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            {{'confirm_order' | translate}}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg_color" fullscreen>
+    <div class="empty-view animate__animated animate__fadeInUp" *ngIf="!eComService.getCartItems() || !eComService.getCartItems().length">
+        <div style="text-align:center">
+            <img src="assets/images/empty_orders.png" />
+            <span style="color:#9E9E9E; font-weight:bold;">
+                {{'empty_cart' | translate}}
+            </span>
+        </div>
+    </div>
+    <ion-list *ngIf="eComService.getCartItems() && eComService.getCartItems().length" lines="none">
+        <h2 *ngIf="eComService.getCartItems() && eComService.getCartItems().length">
+            {{eComService.getCartItems()[0].meta.vendor_name}}</h2>
+
+        <div class="item_list">
+            <ion-item *ngFor="let ci of eComService.getCartItems(); let i = index" class="animate__animated animate__fadeInUp">
+                <div class="item_inner">
+                    <div class="text_box">
+                        <div class="d-flex">
+                            <h3 class="d-flex">
+                                <img *ngIf="ci.meta && ci.meta.food_type == 'veg'" src="assets/images/ic_veg.png">
+                                <img *ngIf="ci.meta && ci.meta.food_type != 'veg'" src="assets/images/ic_nonveg.png"> {{ci.title}}
+                            </h3>
+                            <div class="end item_price d-flex">
+                                <p>
+                                    <span (click)="decrementCartItem(ci)">-</span>
+                                    <strong>{{ci.quantity}}</strong>
+                                    <span (click)="addOrIncrementCartItem(ci)">+</span>
+                                </p>
+                                <h4 class="ion-text-end">{{currency_icon}}{{ci.getTotalBase(true)}}</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngFor="let addOn of ci.addOns" class="text_box customise">
+                        <div class="d-flex">
+                            <h3 class="d-flex"><img>&nbsp;&nbsp;&nbsp; {{addOn.title}}</h3>
+                            <div class="end item_price d-flex">
+                                <h4 class="ion-text-end end">
+                                    {{currency_icon}}{{getAddOnPrice(addOn.price, ci.quantity)}}
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+            <!-- <ion-item class="animate__animated animate__fadeInUp">
+                <div class="item_inner">
+                    <div class="text_box">
+                        <div class="d-flex">
+                            <h3 class="d-flex"><img src="assets/images/ic_nonveg.png">&nbsp;&nbsp;&nbsp; Fried Chicken</h3>
+                            <div class="end item_price d-flex">
+                                <p>
+                                    <span>-</span>
+                                    <strong>1</strong>
+                                    <span>+</span>
+                                </p>
+                                <h4 class="ion-text-end end">$ 7.00</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+
+            <ion-item class="animate__animated animate__fadeInUp">
+                <div class="item_inner">
+                    <div class="text_box">
+                        <div class="d-flex">
+                            <h3 class="d-flex"><img src="assets/images/ic_veg.png">&nbsp;&nbsp;&nbsp; Watermelon Juice</h3>
+                            <div class="end item_price d-flex">
+                                <p>
+                                    <span>-</span>
+                                    <strong>1</strong>
+                                    <span>+</span>
+                                </p>
+                                <h4 class="ion-text-end end">$ 4.50</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ion-item> -->
+        </div>
+
+        <div class="form animate__animated animate__fadeInUp">
+            <!-- <ion-item lines="none">
+                <div class="item_inner d-flex">
+                    <div class="icon_box ion-text-start">
+                        <ion-icon class="zmdi zmdi-label-heart"></ion-icon>
+                    </div>
+                    <ion-input mode="md" type="name" placeholder="{{'enter_promocode' | translate}}"></ion-input>
+                    <h3 class="end">{{'apply' | translate}}</h3>
+                </div>
+            </ion-item> -->
+            <ion-item lines="none" [ngClass]="fabAction ? 'active' : ''">
+                <div class="item_inner d-flex">
+                    <div class="icon_box ion-text-start">
+                        <ion-icon class="zmdi zmdi-label-heart"></ion-icon>
+                    </div>
+                    <ion-input mode="md" type="text" [readonly]="couponRes != null" placeholder="{{'enter_promocode' | translate}}" [(ngModel)]="couponCode" (keyup.enter)="verifyCoupon()"></ion-input>
+                    <h3 *ngIf="!couponCode" class="end" (click)="viewCoupon()">{{'view_offers' | translate}}</h3>
+                    <h3 *ngIf="couponCode && couponRes == null" class="end" (click)="verifyCoupon()">{{'apply' | translate}}</h3>
+                    <h3 *ngIf="couponRes != null" class="end" (click)="removeCoupon()">{{'remove' | translate}}</h3>
+                    <!-- <div class="icon_box ion-text-start end" (click)="removeCoupon()">
+                        <ion-icon class="zmdi zmdi-close"></ion-icon>
+                    </div> -->
+                </div>
+            </ion-item>
+        </div>
+
+        <div class="payment_info animate__animated animate__fadeInUp">
+            <h1>{{'payment_info' | translate}}</h1>
+            <ion-item *ngFor="let ec of eComService.getExtraCharges()" class="animate__animated animate__fadeInUp">
+                <div class="item_inner">
+                    <h3 class="d-flex">{{ec.id | translate}}
+                        <span class="end">{{currency_icon}}{{eComService.calculateExtraChargePiceToShow(ec,
+                            true)}}</span>
+                    </h3>
+                </div>
+            </ion-item>
+            <!-- <ion-item class="animate__animated animate__fadeInUp">
+                <div class="item_inner">
+                    <h3 class="d-flex">{{'service_fee' | translate}} <span class="end">$ 1.50</span></h3>
+                </div>
+            </ion-item> -->
+            <ion-item class="animate__animated animate__fadeInUp">
+                <div class="item_inner">
+                    <h4 class="d-flex">{{'amount_to_pay' | translate}}<span class="end">{{currency_icon}}{{eComService.getCartTotal(true)}}</span></h4>
+                </div>
+            </ion-item>
+        </div>
+    </ion-list>
+</ion-content>
+
+
+<ion-footer class="ion-no-border animate__animated animate__fadeInUp">
+    <div class="delivery_address">
+        <h2 class="d-flex">
+            <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon>
+            {{'deliver_to' | translate}}
+            <span>{{selectedLocation.title}}</span>
+        </h2>
+        <p>{{selectedLocation.formatted_address}}</p>
+    </div>
+    <ion-button size="large" expand="full" class="btn" (click)="payment()">
+        {{'pay' | translate}} {{currency_icon}}{{eComService.getCartTotal(true)}}
+    </ion-button>
+</ion-footer>

@@ -1,0 +1,265 @@
+ion-header {
+    background: var(--white);
+    ion-toolbar ion-title {
+        padding: 0 15px !important;
+        text-align: center !important;
+        font-weight: 600;
+    }
+    ion-segment {
+        border: none !important;
+        background: var(--none) !important;
+        border-radius: 0px;
+        margin: 0 auto;
+        ion-segment-button {
+            background: none !important;
+            position: relative;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase !important;
+            letter-spacing: 0.7px;
+            --background-checked: var(--transparent) !important;
+            --background-focused: var(--transparent) !important;
+            --border-width: 0 !important;
+            --border-radius: 0 !important;
+            --indicator-color: var(--transparent) !important;
+            --indicator-box-shadow: none !important;
+            --ripple-color: var(--transparent) !important;
+            --color: var(--text-light) !important;
+            --color-checked: var(--text-light) !important;
+            --color-hover: var(--text-light) !important;
+            --background-hover: var(--transparent) !important;
+            padding: 0;
+            width: 100%;
+            &::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 0;
+                height: 3px;
+                background: var(--primary);
+                margin: 0 auto;
+                transition: all 0.3s;
+            }
+            ion-label {
+                margin: 11px 0;
+                width: 100%;
+                white-space: normal;
+            }
+            &.segment-button-checked {
+                color: var(--primary) !important;
+                opacity: 1;
+                &::after {
+                    width: 45px;
+                }
+            }
+        }
+    }
+}
+
+.tab_content {
+    ion-list {
+        background: var(--transparent) !important;
+        margin: 0;
+        padding: 0;
+        margin-top: 8px;
+        h2 {
+            margin: 0;
+            color: var(--text-light);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            padding: 20px;
+            font-weight: 500;
+        }
+        ion-item {
+            padding: 3px 0px;
+            min-height: unset !important;
+            --inner-padding-end: 0px;
+            --inner-min-height: unset !important;
+            --padding-start: 0;
+            --highligh-color-focused: var(--transparent) !important;
+            background: var(--white);
+            margin-bottom: 8px;
+            .item_inner {
+                width: 100%;
+                position: relative;
+                overflow: hidden;
+                .item_info {
+                    padding: 10px 20px;
+                    .itme_img {
+                        min-width: 45px;
+                        margin-right: 15px;
+                        img {
+                            width: 45px;
+                        }
+                    }
+                    .item_details {
+                        width: 100%;
+                        h3 {
+                            margin: 0;
+                            font-size: 0.96rem;
+                            color: var(--text-black);
+                            font-weight: 600;
+                            padding-bottom: 6px;
+                            span {
+                                min-width: fit-content;
+                                ion-icon {
+                                    min-width: 30px;
+                                    color: var(--primary);
+                                    font-size: 1.1rem;
+                                }
+                            }
+                        }
+                        h4 {
+                            margin: 0;
+                            color: var(--text-light);
+                            font-size: 0.75rem;
+                            font-weight: 500;
+                            span {
+                                min-width: fit-content;
+                                color: var(--text-dark);
+                            }
+                        }
+                    }
+                }
+                .booking_for {
+                    padding: 0px 20px 10px 20px;
+                    h6 {
+                        margin: 0;
+                        color: var(--text-black);
+                        font-size: 0.85rem;
+                        font-weight: 400;
+                        padding: 3px 0;
+                        span {
+                            color: var(--text-light);
+                        }
+                        &:first-child {
+                            padding-top: 0;
+                        }
+                        &:last-child {
+                            padding-bottom: 0;
+                        }
+                    }
+                    .action_buttons {
+                        display: flex;
+                        align-items: center;
+                        min-width: fit-content;
+                        span {
+                            background: var(--primary);
+                            color: var(--white);
+                            border-radius: 4px;
+                            min-width: 71px;
+                            text-align: center;
+                            min-height: 30px;
+                            display: flex;
+                            align-items: center;
+                            font-size: 0.7rem;
+                            font-weight: 500;
+                            padding: 0 5px;
+                            small {
+                                width: 100%;
+                                text-align: center;
+                                font-size: 0.7rem;
+                                font-weight: 500;
+                            }
+                            &.reject {
+                                background: var(--red_color);
+                            }
+                            &.complete {
+                                // background: transparent;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.animate__animated {
+    --animate-duration: 0s;
+    &:nth-child(1) {
+        --animate-duration: 0.15s;
+    }
+    &:nth-child(2) {
+        --animate-duration: 0.2s;
+    }
+    &:nth-child(3) {
+        --animate-duration: 0.25s;
+    }
+    &:nth-child(4) {
+        --animate-duration: 0.3s;
+    }
+    &:nth-child(5) {
+        --animate-duration: 0.35s;
+    }
+    &:nth-child(6) {
+        --animate-duration: 0.4s;
+    }
+    &:nth-child(7) {
+        --animate-duration: 0.45s;
+    }
+    &:nth-child(8) {
+        --animate-duration: 0.5s;
+    }
+    &:nth-child(9) {
+        --animate-duration: 0.55s;
+    }
+    &:nth-child(10) {
+        --animate-duration: 0.6s;
+    }
+    &:nth-child(11) {
+        --animate-duration: 0.65s;
+    }
+    &:nth-child(12) {
+        --animate-duration: 0.7s;
+    }
+    &:nth-child(13) {
+        --animate-duration: 0.5s;
+    }
+    &:nth-child(14) {
+        --animate-duration: 0.5s;
+    }
+    &:nth-child(15) {
+        --animate-duration: 0.5s;
+    }
+}
+
+ion-slides {
+    ion-slide {
+        display: block;
+        min-height: calc(100vh - 175px);
+        max-height: calc(100vh - 175px);
+        overflow: hidden;
+        overflow-y: auto;
+        text-align: initial;
+        position: relative;
+    }
+}
+
+.empty-view {
+    width: 200px;
+    margin: auto;
+    height: 200px;
+    top: 10%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 10%;
+    img {
+        width: 100px;
+        margin: auto;
+    }
+    span {
+        display: block;
+        text-align: center;
+    }
+    button {
+        margin-top: 50px;
+        span {
+            display: unset !important;
+        }
+    }
+}

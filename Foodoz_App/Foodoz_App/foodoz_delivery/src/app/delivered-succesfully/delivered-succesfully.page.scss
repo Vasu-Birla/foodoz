@@ -1,0 +1,60 @@
+.container {
+    width: calc(100% - 47px);
+    --animate-duration: 0.2s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: fit-content;
+    margin: auto;
+    .img_box {
+        width: 210px;
+        margin: 0 auto;
+        // margin-top: 36%;
+        margin-bottom: 31px;
+    }
+    h1 {
+        color: var(--text_black);
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 600;
+        small {
+            display: block;
+            font-weight: 400;
+            font-size: 1rem;
+            padding-top: 4px;
+        }
+    }
+    .order_info {
+        padding-top: 31px;
+        ion-row {
+            margin: 0 -5px;
+            h2 {
+                margin: 0;
+                color: var(--text_light);
+                font-size: 0.9rem;
+                font-weight: 400;
+                padding-bottom: 5px;
+            }
+            h3 {
+                margin: 0;
+                color: var(--text_black);
+                font-size: 1.1rem;
+                padding-bottom: 4px;
+                font-weight: 600;
+                padding-bottom: 5px;
+            }
+            h4 {
+                margin: 0;
+                color: var(--primary);
+                font-weight: 400;
+                font-size: 1.12rem;
+            }
+        }
+    }
+}
+
+ion-footer {
+    --animate-duration: 0.3s;
+}

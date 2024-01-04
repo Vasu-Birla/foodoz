@@ -1,0 +1,144 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start" mode="md">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            <div class="title_inner d-flex">
+                {{ (order.is_guest ? 'guest_'+order.order_type : order.order_type ) | translate}} | #{{order.id}}
+
+                <span class="end order_status">
+                    {{('order_status_'+order.status) | translate}}
+                </span>
+            </div>
+        </ion-title>
+    </ion-toolbar>
+    <ion-item class="animate__animated animate__fadeInUp" lines="none">
+        <div class="item_inner">
+            <div class="item_info d-flex">
+                <div class="itme_img center_img">
+                    <img [src]="order.vendor.image" class="crop_img">
+                </div>
+                <div class="item_details">
+                    <h3 class="d-flex">
+                        {{order.vendor.name}}
+                        <div class="icon_box end">
+                            <ion-icon class="zmdi zmdi-comment-alt-text ion-text-start" (click)="navChat('vendor')">
+                            </ion-icon>
+                            <ion-icon class="zmdi zmdi-phone ion-text-end" (click)="dialVendor()"></ion-icon>
+                        </div>
+                    </h3>
+                    <h4 class="d-flex">{{order.created_at}}
+                        <span *ngIf="order.payment && order.payment.payment_method" class="end">
+                            {{order.total_toshow}} | {{order.payment.payment_method.title}}
+                        </span>
+                        <span *ngIf="!order.payment && order.payment.payment_method" class="end">
+                            {{order.total_toshow}} | {{'cash' | translate}}
+                        </span>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </ion-item>
+</ion-header>
+
+<ion-content class="bg_color" fullscreeen>
+    <div #map id="map" class="map">
+        <!-- <ion-spinner></ion-spinner> -->
+    </div>
+    <div #pleaseConnect id="please-connect">
+        <!-- <p>{{'loading' | translate}}</p> -->
+    </div>
+
+    <ion-list lines="none" [ngClass]="fabAction ? 'active' : (order.delivery != null && order.delivery.delivery != null) ? 'inactive_2' : 'inactive_1'">
+        <ion-item class="profile_info" *ngIf="order.delivery != null && order.delivery.delivery != null">
+            <div class="item_inner d-flex">
+                <div class="img_box center_img">
+                    <img [src]="order.delivery.delivery.user.image_url" class="crop_img">
+                </div>
+                <div class="text_box">
+                    <h2>{{order.delivery.delivery.user.name}}</h2>
+                    <h3>{{'delivery_partner' | translate}}</h3>
+                </div>
+                <div class="icon_box end">
+                    <ion-icon class="zmdi zmdi-comment-alt-text ion-text-start" (click)="navChat('delivery')">
+                    </ion-icon>
+                    <ion-icon class="zmdi zmdi-phone ion-text-end" (click)="dialDriver()"></ion-icon>
+                </div>
+            </div>
+        </ion-item>
+
+        <div *ngIf="fabAction" class="list_inner">
+            <div class="item_list">
+                <ion-item *ngFor="let item of order.products">
+                    <div class="item_inner">
+                        <div class="text_box">
+                            <div class="d-flex" style="align-items: flex-start;">
+                                <h3 class="d-flex">
+                                    <img *ngIf="item.vendor_product && item.vendor_product.product && item.vendor_product.product.meta && item.vendor_product.product.meta.food_type == 'veg'" src="assets/images/ic_veg.png">
+                                    <img *ngIf="item.vendor_product && item.vendor_product.product && item.vendor_product.product.meta && item.vendor_product.product.meta.food_type != 'veg'" src="assets/images/ic_nonveg.png"> {{item.vendor_product.product.title}}
+                                </h3>
+                                <div class="end item_price d-flex">
+                                    <p> <strong>x{{item.quantity}}</strong> </p>
+                                    <h4 class="ion-text-end end">{{item.vendor_product.sale_priceToShow ? item.vendor_product.sale_priceToShow : item.vendor_product.priceToShow}}
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="item.addon_choices && item.addon_choices.length" class="text_box customise">
+                            <div *ngFor="let choice of item.addon_choices" class="d-flex" style="align-items: flex-start;">
+                                <h3 class="d-flex"><img>{{choice.addon_choice.title}}</h3>
+                                <div class="end item_price d-flex">
+                                    <h4 class="ion-text-end end">{{choice.addon_choice.showChoicePrice}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ion-item>
+            </div>
+
+            <div class="payment_info">
+                <h1>{{'payment_info' | translate}}</h1>
+                <ion-item *ngIf="order.subtotal_toshow">
+                    <div class="item_inner">
+                        <h3 class="d-flex">{{'sub_total' | translate}} <span class="end">{{order.subtotal_toshow}}</span></h3>
+                    </div>
+                </ion-item>
+                <ion-item *ngIf="order.taxes_toshow">
+                    <div class="item_inner">
+                        <h3 class="d-flex">{{'service_fee' | translate}} <span class="end">{{order.taxes_toshow}}</span>
+                        </h3>
+                    </div>
+                </ion-item>
+                <ion-item *ngIf="order.delivery_fee_toshow">
+                    <div class="item_inner">
+                        <h3 class="d-flex">{{'delivery_fee' | translate}} <span class="end">{{order.delivery_fee_toshow}}</span></h3>
+                    </div>
+                </ion-item>
+                <ion-item *ngIf="order.discount && order.discount > 0">
+                    <div class="item_inner">
+                        <h3 class="d-flex">{{'coupon' | translate}} <span class="end">-{{order.discount_toshow}}</span>
+                        </h3>
+                    </div>
+                </ion-item>
+                <ion-item *ngIf="order.total_toshow">
+                    <div class="item_inner">
+                        <h2 class="d-flex">{{ order.payment && order.payment.payment_method ? order.payment.payment_method.title : ('cash' | translate) }}
+                            <span class="end">{{order.total_toshow}}</span>
+                        </h2>
+                    </div>
+                </ion-item>
+            </div>
+        </div>
+    </ion-list>
+</ion-content>
+
+<ion-footer class="ion-no-border d-flex animate__animated animate__fadeInUp" [ngClass]="fabAction ? 'active' : ''">
+    <h2>{{order.products.length}} {{'items' | translate}}</h2>
+    <h6 class="end d-flex" (click)="toggleFab()">
+        <span>{{'view_order' | translate}}</span>
+        <span>{{'close' | translate}}</span>
+        <ion-icon class="zmdi zmdi-chevron-up ion-text-center end"></ion-icon>
+    </h6>
+</ion-footer>

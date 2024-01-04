@@ -1,0 +1,6 @@
+open project in android studio
+add following dependency
+implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
+in app level build.gradle file's dependencies.
+sync
+and build again.

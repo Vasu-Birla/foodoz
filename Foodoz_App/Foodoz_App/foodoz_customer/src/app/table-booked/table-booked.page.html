@@ -1,0 +1,27 @@
+<!--
+<ion-header>
+  <ion-toolbar>
+    <ion-title>order-placed</ion-title>
+  </ion-toolbar>
+</ion-header>
+-->
+
+<ion-content>
+    <div class="container ion-text-center animate__animated animate__zoomIn">
+        <div class="img_box">
+            <img src="assets/images/table_booked.png">
+        </div>
+        <div class="text_box">
+            <h2>{{'table_booked' | translate}} !!</h2>
+            <p>
+                {{'thanks_for_choosing_us' | translate}}.<br>
+                {{'your_booking_with_restaurant' | translate}} <br>
+                {{'ic_confirmed' | translate}}.</p>
+            
+       	<p>{{'you_can_check_your_booking_details' | translate}}<br>{{'in_my_order_section' | translate}}.</p>
+        </div>
+    </div>
+</ion-content>
+<ion-footer class="ion-no-border">
+    <ion-button size="large" shape="full" class="btn" (click)="tabs()"> {{'my_bookings' | translate}} </ion-button>
+</ion-footer>

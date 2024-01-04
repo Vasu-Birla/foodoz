@@ -1,0 +1,24 @@
+<!--
+<ion-header>
+  <ion-toolbar>
+    <ion-title>order-placed</ion-title>
+  </ion-toolbar>
+</ion-header>
+-->
+
+<ion-content>
+	<div class="container ion-text-center animate__animated animate__zoomIn">
+		<div class="img_box">
+			<img src="assets/images/order_placed.png">
+		</div>
+		<div *ngIf="!processing" class="text_box">
+			<h2 [ngClass]="paymentDone ? 'green_h1' : 'red_h1'">
+				{{ (paymentDone ? 'order_placed' : 'order_failed') | translate}}
+			</h2>
+			<p [innerHTML]="( paymentDone ? 'order_placed_msg' : 'order_failed_msg') | translate"> </p>
+		</div>
+	</div>
+</ion-content>
+<ion-footer class="ion-no-border">
+	<ion-button size="large" shape="full" class="btn" (click)="navMyOrder()"> {{'my_orders' | translate}} </ion-button>
+</ion-footer>

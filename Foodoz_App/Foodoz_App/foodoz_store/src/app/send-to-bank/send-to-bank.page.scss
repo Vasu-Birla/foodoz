@@ -1,0 +1,141 @@
+ion-header {
+    background: var(--white);
+
+    .banner {
+        position: relative;
+        z-index: 99;
+
+        padding: 20px 20px;
+
+        h2 {
+            margin: 0;
+            text-transform: uppercase;
+            font-size: .9rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            padding-bottom: 4px;
+            color: var(--text-light);
+        }
+
+        h1 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 2.2rem;
+            color: var(--text-black);
+        }
+    }
+}
+
+
+.form {
+    width: 100%;
+    margin-top: 8px;
+    padding: 0;
+
+    ion-list {
+        ion-card {
+            width: 100%;
+            border-radius: 0;
+            background: var(--white);
+            margin: 0;
+            box-shadow: none;
+            margin-bottom: 8px;
+            padding: 20px 20px;
+
+            background: var(--white);
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            h2 {
+                margin: 0;
+                text-transform: uppercase;
+                font-size: .9rem;
+                font-weight: 400;
+                letter-spacing: 1px;
+                padding-bottom: 28px;
+                color: var(--text-light);
+            }
+
+            ion-item {
+                &:last-child {
+                    margin-bottom: 0;
+                }
+
+                ion-label {
+                    font-size: 0.65rem !important;
+                    color: var(--text-dark) !important;
+                    margin-bottom: 9px !important;
+                    letter-spacing: 1px !important;
+                }
+            }
+        }
+    }
+}
+
+.animate__animated {
+    &:nth-child(1) {
+        --animate-duration: .15s;
+    }
+
+    &:nth-child(2) {
+        --animate-duration: .2s;
+    }
+
+    &:nth-child(3) {
+        --animate-duration: .25s;
+    }
+
+    &:nth-child(4) {
+        --animate-duration: .3s;
+    }
+
+    &:nth-child(5) {
+        --animate-duration: .35s;
+    }
+
+    &:nth-child(6) {
+        --animate-duration: .4s;
+    }
+
+    &:nth-child(7) {
+        --animate-duration: .45s;
+    }
+
+    &:nth-child(8) {
+        --animate-duration: .5s;
+    }
+
+    &:nth-child(9) {
+        --animate-duration: .55s;
+    }
+
+    &:nth-child(10) {
+        --animate-duration: .6s;
+    }
+
+    &:nth-child(11) {
+        --animate-duration: .65s;
+    }
+
+    &:nth-child(12) {
+        --animate-duration: .7s;
+    }
+
+    &:nth-child(13) {
+        --animate-duration: .5s;
+    }
+
+    &:nth-child(14) {
+        --animate-duration: .5s;
+    }
+
+    &:nth-child(15) {
+        --animate-duration: .5s;
+    }
+}
+
+ion-footer {
+    --animate-duration: .4s;
+}

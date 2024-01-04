@@ -1,0 +1,73 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            {{'favorites' | translate}}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="empty-view animate__animated animate__fadeInUp" *ngIf="!isLoading && (!vendors || !vendors.length)">
+        <div style="text-align:center">
+            <img class="light_img" src="assets/images/empty_plc_light.png" alt="no offers" />
+            <img class="dark_img" src="assets/images/empty_plc_dark.png" alt="no offers" />
+            <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+            <span style="color:#9E9E9E; font-weight:bold;">
+                {{ (isLoading ? 'loading' : 'empty_favorites') | translate}}
+            </span>
+        </div>
+    </div>
+    <ion-list *ngIf="isLoading" lines="none">
+        <ion-item *ngFor="let vendor of [1,2,3,4,5,6,7,8,9]" class="animate__animated animate__fadeInUp">
+            <div class="item_inner d-flex">
+                <div class="img_box center_img">
+                    <div class="skeleton_img crop_img"></div>
+                </div>
+                <div class="text_box">
+                    <h3 class="d-flex">
+                        <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                    </h3>
+                    <h4>
+                        <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                    </h4>
+
+                    <h5 class="d-flex">
+                        <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                    </h5>
+
+                    <h4 class="d-flex">
+                        <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                    </h4>
+                </div>
+            </div>
+        </ion-item>
+    </ion-list>
+    <ion-list *ngIf="!isLoading" lines="none">
+        <ion-item *ngFor="let vendor of vendors" (click)="navVenDetail(vendor)" class="animate__animated animate__fadeInUp">
+            <div class="item_inner d-flex">
+                <div class="img_box center_img">
+                    <img [src]="vendor.image" class="crop_img">
+                </div>
+                <div class="text_box">
+                    <h3 class="d-flex">{{vendor.name}}
+                        <ion-icon class="zmdi zmdi-favorite end ion-text-end"></ion-icon>
+                    </h3>
+                    <h4>{{vendor.categories_text}}</h4>
+
+                    <h5 class="d-flex">
+                        <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                        {{vendor.ratings}}
+                    </h5>
+
+                    <h4 class="d-flex">
+                        <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon>
+                        {{vendor.distance_toshow}}&nbsp;&nbsp;|&nbsp;&nbsp;{{vendor.address}}
+                    </h4>
+                </div>
+            </div>
+        </ion-item>
+    </ion-list>
+</ion-content>

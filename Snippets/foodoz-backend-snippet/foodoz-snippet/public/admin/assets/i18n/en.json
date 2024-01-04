@@ -1,0 +1,474 @@
+{
+	"CATEGORY": {
+		"FIELDS": {
+			"IMAGE": {
+				"LABEL": "Image"
+			},
+			"PARENT": {
+				"LABEL": "Parent"
+			},
+			"SLUG": {
+				"LABEL": "Slug",
+				"VALIDATION": "Slug is required"
+			},
+			"SORT_ORDER": {
+				"LABEL": "Sort Order",
+				"VALIDATION": "Sort Order is required"
+			},
+			"TITLE": {
+				"HEADER": "Title Translations",
+				"LABEL": "Title"
+			}
+		},
+		"LABELS": {
+			"LIST": "Categories"
+		}
+	},
+	"BANNER": {
+		"FIELDS": {
+			"IMAGE": {
+				"LABEL": "Image"
+			},
+			"SORT_ORDER": {
+				"LABEL": "Sort Order",
+				"VALIDATION": "Sort Order is required"
+			},
+			"TITLE": {
+				"HEADER": "Title Translations",
+				"LABEL": "Title"
+			}
+		},
+		"LABELS": {
+			"LIST": "Banners"
+		}
+	},
+	"COMMON": {
+		"BACK": "Back",
+		"MORE_ACTIONS": "More Actions",
+		"SAVE": "Save",
+		"DELETE": "Delete",
+		"META": "Meta Fields",
+		"META_ADD": "Add Metafields"
+	},
+	"DELIVERY": {
+		"FIELDS": {
+			"ASSIGNED": {
+				"LABEL": "Assigned?"
+			},
+			"IS_ONLINE": {
+				"LABEL": "Online?"
+			},
+			"IS_VERIFIED": {
+				"LABEL": "Verified?"
+			},
+			"LATITUDE": {
+				"LABEL": "Latitude",
+				"VALIDATION": "Valid latitude is required"
+			},
+			"LONGITUDE": {
+				"LABEL": "Longitude",
+				"VALIDATION": "Valid longitude is required"
+			},
+			"USER": {
+				"HEADER": "User information",
+				"LABEL": "User"
+			}
+		},
+		"LABELS": {
+			"LIST": "Delivery Profiles"
+		}
+	},
+	"FAQ": {
+		"FIELDS": {
+			"DESCRIPTION": {
+				"LABEL": "Description",
+				"VALIDATION": "Description is required"
+			},
+			"SHORT_DESCRIPTION": {
+				"LABEL": "Short Description",
+				"VALIDATION": "Short Description is required"
+			},
+			"TITLE": {
+				"LABEL": "Title",
+				"VALIDATION": "Title is required"
+			}
+		},
+		"LABELS": {
+			"LIST": "Faqs"
+		}
+	},
+	"ORDER": {
+		"FIELDS": {
+			"ADDRESS": {
+				"FORMATTED_ADDRESS": {
+					"LABEL": "Address"
+				},
+				"HEADER": "Delivery Address",
+				"LATITUDE": {
+					"LABEL": "Latitude"
+				},
+				"LONGITUDE": {
+					"LABEL": "Longitude"
+				}
+			},
+			"CREATED_AT": {
+				"LABEL": "Created At"
+			},
+			"DELIVERY": {
+				"HEADER": "Delivery Information",
+				"LATITUDE": {
+					"LABEL": "Latitude"
+				},
+				"LONGITUDE": {
+					"LABEL": "Longitude"
+				},
+				"MOBILE_NUMBER": {
+					"LABEL": "Mobile Number"
+				},
+				"NAME": {
+					"LABEL": "Name"
+				},
+				"STATUS": {
+					"LABEL": "Delivery Status"
+				}
+			},
+			"DELIVERY_FEE": {
+				"LABEL": "Delivery Fee"
+			},
+			"DISCOUNT": {
+				"LABEL": "Discount"
+			},
+			"PAYMENT": {
+				"HEADER": "Payment Information"
+			},
+			"PAYMENT_METHOD": {
+				"LABEL": "Payment Method"
+			},
+			"PAYMENT_STATUS": {
+				"LABEL": "Payment Status"
+			},
+			"SUBTOTAL": {
+				"LABEL": "Subtotal"
+			},
+			"TAXES": {
+				"LABEL": "Taxes"
+			},
+			"TOTAL": {
+				"LABEL": "Total"
+			},
+			"TYPE": {
+				"LABEL": "Type"
+			},
+			"STATUS": {
+				"LABEL": "Status"
+			},
+			"ID": {
+				"LABEL": "Id"
+			},
+			"USER": {
+				"EMAIL": {
+					"LABEL": "Email"
+				},
+				"HEADER": "Customer Information",
+				"MOBILE_NUMBER": {
+					"LABEL": "Mobile Number"
+				},
+				"NAME": {
+					"LABEL": "Name"
+				},
+				"LABEL": "User"
+			},
+			"VENDOR": {
+				"ADDRESS": {
+					"LABEL": "Address"
+				},
+				"HEADER": "Vendor Information",
+				"LATITUDE": {
+					"LABEL": "Latitude"
+				},
+				"LONGITUDE": {
+					"LABEL": "Longitude"
+				},
+				"NAME": {
+					"LABEL": "Name"
+				},
+				"LABEL": "Vendor"
+			}
+		},
+		"LABELS": {
+			"LIST": "Orders"
+		}
+	},
+	"PAYMENTMETHOD": {
+		"FIELDS": {
+			"ENABLED": {
+				"LABEL": "Enabled?"
+			},
+			"META": {
+				"LABEL": "Meta"
+			},
+			"SLUG": {
+				"LABEL": "Slug",
+				"VALIDATION": "Slug is required"
+			},
+			"TITLE": {
+				"HEADER": "Title Translations",
+				"LABEL": "Title"
+			},
+			"TYPE": {
+				"LABEL": "Type"
+			}
+		},
+		"LABELS": {
+			"LIST": "Payment Methods"
+		}
+	},
+	"PRODUCT": {
+		"FIELDS": {
+			"CATEGORY": {
+				"LABEL": "Category"
+			},
+			"DETAIL": {
+				"HEADER": "Detail Translation",
+				"LABEL": "Detail"
+			},
+			"IMAGE": {
+				"LABEL": "Image"
+			},
+			"PRICE": {
+				"LABEL": "Price",
+				"VALIDATION": "Price is required"
+			},
+			"STOCK_QUANTITY": {
+				"LABEL": "Stock quantitty",
+				"VALIDATION": "Stock quantity is required"
+			},
+			"TITLE": {
+				"HEADER": "Title Translation",
+				"LABEL": "Title"
+			},
+			"VENDOR": {
+				"LABEL": "Vendor"
+			},
+			"ADDON_GROUP": {
+				"HEADER": "Addon Group",
+                "LABEL": "Group",
+                "DELETE": {
+                    "LABEL": "Delete Group"
+				},
+				"MIN_CHOICE": {
+                    "LABEL": "Minimum"
+				},
+				"MAX_CHOICE": {
+                    "LABEL": "Maximum"
+				},
+				"ADD_CHOICE": {
+                    "LABEL": "Add Choice"
+				},
+				"ADD_GROUP": {
+                    "LABEL": "Add Group"
+				},
+				"CHOICE": {
+                    "LABEL": "Choice"
+				}				
+			}
+		},
+		"LABELS": {
+			"LIST": "Products"
+		}
+	},
+	"SETTINGS": {
+		"APP_CONFIG": {
+			"LABEL": "App Configuration",
+			"TIMEZONE": {
+				"LABEL": "Timezone"
+			}
+		},
+		"EMAIL_SETTINGS": {
+			"ENCRYPTION": {
+				"LABEL": "Encryption"
+			},
+			"HOST": {
+				"LABEL": "Host"
+			},
+			"LABEL": "Email Configuration",
+			"MAILGUN_DOMAIN": {
+				"LABEL": "Mailgun Domain"
+			},
+			"MAILGUN_SECRET": {
+				"LABEL": "Mailgun Secret"
+			},
+			"MAIL_DRIVER": {
+				"LABEL": "Mail Driver"
+			},
+			"MAIL_FROM_ADDRESS": {
+				"LABEL": "From Address"
+			},
+			"MAIL_FROM_NAME": {
+				"LABEL": "From Name"
+			},
+			"ONESIGNAL_APP_ID_CUSTOMER": {
+				"LABEL": "Onesignal App ID for Customer App"
+			},
+			"ONESIGNAL_APP_ID_DRIVER": {
+				"LABEL": "Onesignal App ID for Driver App"
+			},
+			"ONESIGNAL_APP_ID_VENDOR": {
+				"LABEL": "Onesignal App ID for Vendor App"
+			},
+			"ONESIGNAL_REST_API_CUSTOMER": {
+				"LABEL": "Onesignal REST API for Customer App"
+			},
+			"ONESIGNAL_REST_API_DRIVER": {
+				"LABEL": "Onesignal REST API for Driver App"
+			},
+			"ONESIGNAL_REST_API_VENDOR": {
+				"LABEL": "Onesignal REST API for Vendor App"
+			},
+			"PASSWORD": {
+				"LABEL": "SMTP Password"
+			},
+			"PORT": {
+				"LABEL": "SMTP Port"
+			},
+			"SES_KEY": {
+				"LABEL": "SES Key"
+			},
+			"SES_SECRET": {
+				"LABEL": "SES Secret"
+			},
+			"USERNAME": {
+				"LABEL": "SMTP Username"
+			}
+		},
+		"LABELS": {
+			"EDIT": "Update Settings",
+			"ENV": ""
+		},
+		"PUSH_NOTIFICATIONS": {
+			"LABEL": "Push Notifcations"
+		}
+	},
+	"SUPPORT": {
+		"LABELS": {
+			"LIST": "Support Requests"
+		},
+		"FIELDS": {
+			"NAME": {
+				"LABEL": "Name"
+			},
+			"EMAIL": {
+				"LABEL": "Email"
+			},
+			"MESSAGE": {
+				"LABEL": "Message"
+			}
+		}
+	},
+	"USER": {
+		"EMAIL": {
+			"LABEL": "Email",
+			"VALIDATION": "Email is required"
+		},
+		"IMAGE": {
+			"LABEL": "Image"
+		},
+		"LABELS": {
+			"LIST": "Users"
+		},
+		"LANGUAGE": {
+			"LABEL": "Language",
+			"VALIDATION": "Language is required"
+		},
+		"MOBILE_NUMBER": {
+			"LABEL": "Mobile Number",
+			"VALIDATION": "Mobile number is required"
+		},
+		"MOBILE_VERIFIED": {
+			"LABEL": "Mobile Verified?"
+		},
+		"NAME": {
+			"LABEL": "Name",
+			"VALIDATION": "Name is required"
+		},
+		"PASSWORD": {
+			"LABEL": "Password",
+			"VALIDATION": "Password is required"
+		},
+		"ROLES": {
+			"LABEL": "Roles"
+		}
+	},
+	"VENDOR": {
+		"FIELDS": {
+			"ADDRESS": {
+				"LABEL": "Address",
+				"VALIDATION": "Address is required"
+			},
+			"AREA": {
+				"LABEL": "Area",
+				"VALIDATION": "Area is required"
+			},
+			"CATEGORY": {
+				"LABEL": "Category"
+			},
+			"DELIVERY_FEE": {
+				"LABEL": "Delivery Fee",
+				"VALIDATION": "Delivery Fee is required"
+			},
+			"DETAILS": {
+				"HEADER": "Details Translation",
+				"LABEL": "Details"
+			},
+			"IMAGE": {
+				"LABEL": "Image"
+			},
+			"LATITUDE": {
+				"LABEL": "Latitude",
+				"VALIDATION": "Valid latitude is required"
+			},
+			"LONGITUDE": {
+				"LABEL": "Longitude",
+				"VALIDATION": "Valid longitude is required"
+			},
+			"MINIMUM_ORDER": {
+				"LABEL": "Minimum Order",
+				"VALIDATION": "Minimum Order is required"
+			},
+			"NAME": {
+				"HEADER": "Name Translation",
+				"LABEL": "Name"
+			},
+			"TAGLINE": {
+				"HEADER": "Tagline Translation",
+				"LABEL": "Tagline"
+			},
+			"USER": {
+				"HEADER": "User information",
+				"LABEL": "User"
+			}
+		},
+		"LABELS": {
+			"LIST": "Vendors"
+		}
+	},
+	"TRANSACTION": {
+		"LABELS": {
+			"LIST": "Transactions"
+		},
+		"FIELDS": {
+			"USER": {
+				"LABEL": "User"
+			},
+			"TYPE": {
+				"LABEL": "Type"
+			},
+			"META": {
+				"LABEL": "Meta"
+			},
+			"AMOUNT": {
+				"LABEL": "Amount"
+			}
+		}
+	}
+}

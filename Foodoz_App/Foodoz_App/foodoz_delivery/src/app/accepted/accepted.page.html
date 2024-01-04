@@ -1,0 +1,133 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            <div class="d-flex " [ngClass]="fabAction ? 'active' : ''">
+                <span>{{'order_id' | translate}}{{order.id}}</span>
+
+                <div class="order_info_button end" (click)="toggleFab()">
+                    <span class="info">
+                        <ion-icon class="zmdi zmdi-shopping-basket ion-text-start"></ion-icon>
+                        {{'info' | translate}}
+                    </span>
+                    <span class="cloes">
+                        <ion-icon class="zmdi zmdi-close ion-text-start"></ion-icon>
+                        {{'close' | translate}}
+                    </span>
+                </div>
+            </div>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <div class="order_info" [ngClass]="fabAction ? 'active' : ''">
+        <div class="item_container">
+            <div class="item" *ngFor="let product of order.products">
+                <h2 class="d-flex">
+                    <span> {{product.vendor_product.product.title}}</span>
+
+                    <small class="ion-text-center">
+                        x {{product.quantity}}
+                    </small>
+
+                    <strong class="end ion-text-end">
+                        {{product.vendor_product.salePriceToShow ? product.vendor_product.salePriceToShow :
+                        product.vendor_product.priceToShow}}
+                    </strong>
+                </h2>
+                <p class="d-flex" *ngFor="let adOn of product.addon_choices">
+                    <span class="continuity">{{adOn.addon_choice.title}}</span>
+                    <span class="end">{{adOn.addon_choice.priceToShow}}</span>
+                </p>
+            </div>
+            <div class="item">
+                <h2 class="d-flex">
+                    <span>{{'subtotal' | translate}}</span>
+                    <strong class="end ion-text-end"
+                        style="min-width: 50%;max-width: 50%;">{{order.subtotal_toshow}}</strong>
+                </h2>
+            </div>
+            <div class="item">
+                <h2 class="d-flex">
+                    <span>{{order.payment.payment_method.title}}</span>
+                    <strong class="end ion-text-end"
+                        style="min-width: 50%;max-width: 50%;">{{order.total_toshow}}</strong>
+                </h2>
+            </div>
+
+            <!-- <div class="payment_detail" style="position: sticky; bottom: 0;">
+                <h2 class="d-flex">
+                    {{order.payment.payment_method.title}}
+                    <span class="end ion-text-end">{{order.total_toshow}}</span>
+                </h2>
+            </div> -->
+        </div>
+
+        <div class="payment_detail" (click)="toggleFab()">
+            <h2 class="ion-text-center">
+                {{'close' | translate}}
+            </h2>
+        </div>
+    </div>
+
+    <div #map id="map" class="map">
+        <!-- <ion-spinner></ion-spinner> -->
+    </div>
+    <div #pleaseConnect id="please-connect">
+        <!-- <p>{{'loading' | translate}}</p> -->
+    </div>
+</ion-content>
+
+<ion-footer [ngClass]="fabAction ? 'active' : ''" class="ion-no-border animate__animated animate__fadeInUp">
+    <ion-card>
+        <div class="card_header d-flex">
+
+            <div class="text_box">
+                <h2 class="d-flex">
+                    <ion-icon class="zmdi zmdi-bike ion-text-start"></ion-icon>{{distanceToShow}} {{distance_metric |
+                    translate}} <span>&nbsp;({{durationToShow}})</span>
+                </h2>
+            </div>
+
+            <div class="direction end" (click)="confirmNavigation()">
+                <ion-icon class="zmdi zmdi-navigation ion-text-start"></ion-icon>
+                {{'direction' | translate}}
+            </div>
+        </div>
+        <div class="delivery_details">
+            <div class="delivery_address animate__animated animate__fadeInUp d-flex">
+                <ion-icon class="zmdi zmdi-pin ion-text-start"></ion-icon>
+                <div class="text_box">
+                    <h2>{{order.vendor.name}}</h2>
+                    <p>{{order.vendor.address}}</p>
+                </div>
+
+                <div class="iocn_box end d-flex">
+                    <ion-icon class="zmdi zmdi-comment-alt-text ion-text-end" (click)="navChat('vendor')"></ion-icon>
+                    <ion-icon class="zmdi zmdi-phone ion-text-end end" (click)="dialVendor()"></ion-icon>
+                </div>
+            </div>
+            <div class="dotted">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="delivery_address animate__animated animate__fadeInUp d-flex">
+                <ion-icon class="zmdi zmdi-navigation ion-text-start"></ion-icon>
+                <div class="text_box">
+                    <h2>{{order.user ? order.user.name : order.customer_name}}</h2>
+                    <p *ngIf="order.address">{{order.address.formatted_address}}</p>
+                </div>
+                <div class="iocn_box end d-flex">
+                    <ion-icon class="zmdi zmdi-comment-alt-text ion-text-end" (click)="navChat('customer')"></ion-icon>
+                    <ion-icon class="zmdi zmdi-phone ion-text-end end" (click)="dialCustomer()"></ion-icon>
+                </div>
+            </div>
+        </div>
+    </ion-card>
+    <ion-button size="large" shape="full" class="btn animate__animated animate__fadeInUp" (click)="actionOrder()">
+        {{actionText}}</ion-button>
+</ion-footer>

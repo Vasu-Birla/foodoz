@@ -1,0 +1,592 @@
+<ion-header>
+    <ion-toolbar>
+        <div class="toolbar_inner d-flex">
+            <ion-buttons slot="start" mode="md">
+                <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+            </ion-buttons>
+            <ion-title>
+                <div class="title_inner">
+                    {{vendor?.name}}
+                    <h5 class="d-flex">
+                        <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                        {{vendor?.ratings}} &nbsp;
+                        <span>{{vendor?.ratings_count}} {{'reviews' | translate}}
+                        </span>
+                    </h5>
+                </div>
+            </ion-title>
+        </div>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+    <div class="empty-view animate__animated animate__fadeInUp" *ngIf="!isLoading && (!reviews || !reviews.length)">
+        <div style="text-align:center;">
+            <img class="light_img" src="assets/images/empty_reviews.png" alt="no offers" />
+            <img class="dark_img" src="assets/images/empty_reviews_dark.png" alt="no offers" />
+            <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+            <span style="color:#9E9E9E; font-weight:bold;">
+                {{ (isLoading ? 'loading' : 'empty_reviews') | translate}}
+            </span>
+        </div>
+    </div>
+    <ion-list *ngIf="isLoading" lines="none">
+        <ion-item *ngFor="let review of [1,2,3,4,5,6,7,8,9]" class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>
+                    <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                </h2>
+                <h5 class="d-flex">
+                    <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                </h5>
+                <p>
+                    <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                </p>
+            </div>
+        </ion-item>
+    </ion-list>
+    <ion-list *ngIf="!isLoading" lines="none">
+        <ion-item *ngFor="let review of reviews" class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>{{review.user.name}}</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    {{review.rating}}
+                    <span class="end"> {{review.created_at}} </span>
+                </h5>
+                <p>{{review.review}}</p>
+            </div>
+        </ion-item>
+    </ion-list>
+    <!-- <ion-list lines="none">
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>George Timber</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    4.0
+                    <span class="end">5 April, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>     
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Emilli Johnson</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">23 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>  
+        
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Jackson Demmy</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    4.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>   
+        
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Opera Taylor</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>    
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Geillinia Hopeson</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>
+        
+         <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>George Timber</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    4.0
+                    <span class="end">5 April, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>     
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Emilli Johnson</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">23 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>  
+        
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Jackson Demmy</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    4.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>   
+        
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Opera Taylor</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>    
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Geillinia Hopeson</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>
+         <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>George Timber</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    4.0
+                    <span class="end">5 April, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>     
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Emilli Johnson</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">23 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>  
+        
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Jackson Demmy</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    4.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>   
+        
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Opera Taylor</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>    
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Geillinia Hopeson</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>
+         <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>George Timber</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    4.0
+                    <span class="end">5 April, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>     
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Emilli Johnson</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">23 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>  
+        
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Jackson Demmy</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    4.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>   
+        
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Opera Taylor</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>    
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Geillinia Hopeson</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>
+         <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>George Timber</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    4.0
+                    <span class="end">5 April, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>     
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Emilli Johnson</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">23 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>  
+        
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Jackson Demmy</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    4.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>   
+        
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Opera Taylor</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>    
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Geillinia Hopeson</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>
+         <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>George Timber</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    4.0
+                    <span class="end">5 April, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>     
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Emilli Johnson</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">23 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>  
+        
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Jackson Demmy</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    4.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>   
+        
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Opera Taylor</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>    
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Geillinia Hopeson</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>
+         <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>George Timber</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    4.0
+                    <span class="end">5 April, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>     
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Emilli Johnson</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">23 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>  
+        
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Jackson Demmy</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    4.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>   
+        
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Opera Taylor</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>    
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Geillinia Hopeson</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>
+         <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>George Timber</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    4.0
+                    <span class="end">5 April, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>     
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Emilli Johnson</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">23 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>  
+        
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Jackson Demmy</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    4.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>   
+        
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Opera Taylor</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>    
+        
+        <ion-item class="animate__animated animate__fadeInUp">
+            <div class="item_inner">
+                <h2>Geillinia Hopeson</h2>
+                <h5 class="d-flex">
+                    <ion-icon class="zmdi zmdi-star ion-text-start"></ion-icon>
+                    5.0
+                    <span class="end">5 Feb, 20</span>
+                </h5>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                </p>
+            </div>
+        </ion-item>
+    </ion-list> -->
+</ion-content>

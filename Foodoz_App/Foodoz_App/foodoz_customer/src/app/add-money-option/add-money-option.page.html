@@ -1,0 +1,100 @@
+<ion-header class="bg_transparent">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{'add_money' | translate}}</ion-title>
+    </ion-toolbar>
+    <div class="form">
+        <ion-item lines="none">
+            <div class="item_inner d-flex">
+                <div class="input_box">
+                    <ion-label mode="md" position="stacked">{{"enter_amount_to_add" | translate}} ({{currency_icon}})
+                    </ion-label>
+                    <ion-input mode="md" type="number" [(ngModel)]="amount"></ion-input>
+                </div>
+            </div>
+        </ion-item>
+    </div>
+</ion-header>
+
+<ion-content fullscreen class="bg_color">
+    <div class="empty-view animate__animated animate__fadeInUp"
+        *ngIf="!isLoading && (!paymentMethods || !paymentMethods.length)">
+        <div style="text-align:center;">
+            <img class="light_img" src="assets/images/empty_provider.png" alt="no offers" />
+            <img class="dark_img" src="assets/images/empty_provider_dark.png" alt="no offers" />
+            <span style="color:#9E9E9E; font-weight:bold;">
+                {{'empty_payment_methods' | translate}}
+            </span>
+        </div>
+    </div>
+    <ion-list *ngIf="isLoading" lines="none">
+        <ion-item>
+            <div class="item_inner">
+                <div class="payment_option d-flex" *ngFor="let paymentMethod of [1,2,3,4,5,6]">
+                    <h3 style="width: 100%;">
+                        <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                    </h3>
+                </div>
+            </div>
+        </ion-item>
+    </ion-list>
+    <ion-list *ngIf="!isLoading" lines="none">
+        <ion-radio-group value="{{paymentMethoIdSelected}}" (ionChange)="onPaymentMethodSelected($event)">
+            <ion-item *ngFor="let pm of paymentMethods">
+                <div class="item_inner">
+                    <div class="payment_option d-flex">
+                        <h3 class="d-flex">{{pm.title}}</h3>
+                        <ion-radio class="end" slot="start" value="{{pm.id}}"></ion-radio>
+                    </div>
+                </div>
+            </ion-item>
+        </ion-radio-group>
+        <!-- <ion-item>
+            <div class="item_inner">
+                <h2>{{'add_via' | translate}}</h2>
+                <div class="payment_option animate__animated animate__fadeInUp d-flex">
+                    <div class="img_box center_img">
+                        <img src="assets/images/payment_card.png" class="crop_img">
+                    </div>
+                    <h3>Credit Card</h3>
+                </div>
+
+                <div class="payment_option animate__animated animate__fadeInUp d-flex">
+                    <div class="img_box center_img">
+                        <img src="assets/images/payment_card.png" class="crop_img">
+                    </div>
+                    <h3>Debit Card</h3>
+                </div>
+
+                <div class="payment_option animate__animated animate__fadeInUp d-flex">
+                    <div class="img_box center_img">
+                        <img src="assets/images/payment_paypal.png" class="crop_img">
+                    </div>
+                    <h3>PayPal</h3>
+                </div>
+
+                <div class="payment_option animate__animated animate__fadeInUp d-flex">
+                    <div class="img_box center_img">
+                        <img src="assets/images/payment_payu.png" class="crop_img">
+                    </div>
+                    <h3>PayU Money</h3>
+                </div>
+
+                <div class="payment_option animate__animated animate__fadeInUp d-flex">
+                    <div class="img_box center_img">
+                        <img src="assets/images/payment_stripe.png" class="crop_img">
+                    </div>
+                    <h3>Stripe</h3>
+                </div>
+            </div>
+        </ion-item> -->
+    </ion-list>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+    <ion-button size="large" shape="full" class="btn" (click)="initAdd()">
+        {{'continue' | translate}}
+    </ion-button>
+</ion-footer>

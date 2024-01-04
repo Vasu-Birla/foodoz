@@ -1,0 +1,171 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            <ion-segment mode="ios" lines="none" (ionChange)="segmentChanged()" [(ngModel)]="segment">
+                <ion-segment-button mode="ios" value="0">
+                    <ion-label>
+                        {{'my_orders' | translate}}
+                    </ion-label>
+                </ion-segment-button>
+                <!-- <ion-segment-button mode="ios" value="1">
+                    <ion-label>
+                        {{'table_booking' | translate}}
+                    </ion-label>
+                </ion-segment-button> -->
+            </ion-segment>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg_color" fullscreen>
+    <ion-slides #slides (ionSlideWillChange)="slideChanged()">
+        <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200" (ionRefresh)="doRefresh($event)">
+            <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="{{'pull_refresh' | translate}}" refreshingSpinner="circles" refreshingText="{{'refreshing' | translate}}">
+            </ion-refresher-content>
+        </ion-refresher>
+
+
+        <ion-slide>
+            <div class="empty-view animate__animated animate__fadeInUp" *ngIf="!isLoading && (!orders || !orders.length)">
+                <div style="text-align:center" (click)="alertLogin()">
+                    <img class="light_img" src="assets/images/empty_orders.png" alt="no offers" />
+                    <img class="dark_img" src="assets/images/empty_orders_dark.png" alt="no offers" />
+                    <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+                    <span *ngIf="userMe" style="color:#9E9E9E; font-weight:bold;">
+                        {{ (isLoading ? 'appear_here_order' : 'empty_orders') | translate}}
+                    </span>
+                    <p *ngIf="!userMe" style="color:#9E9E9E; font-weight:bold;" [innerHTML]="'alert_login_msg' | translate"></p>
+                </div>
+            </div>
+            <ion-list *ngIf="!isLoading" lines="none">
+                <div *ngFor="let order of orders">
+                    <h2 *ngIf="0 > order.id">{{order.type | translate}}</h2>
+                    <ion-item *ngIf="order.id > 0" class="animate__animated animate__fadeInUp">
+                        <div class="item_inner">
+                            <div class="item_info d-flex" (click)="toggleOrderExpansion(order)">
+                                <div class="itme_img center_img">
+                                    <img [src]="order.vendor.image" class="crop_img">
+                                </div>
+                                <div class="item_details">
+                                    <h3 class="d-flex">
+                                        {{order.vendor.name}}
+                                        <span class="end order_status">
+                                            {{('order_status_'+order.status) | translate}}
+                                        </span>
+                                    </h3>
+                                    <h4 class="d-flex">
+                                        {{order.created_at}}
+                                        <span class="end">
+                                            {{ (order.is_guest ? 'guest_'+order.order_type : order.order_type ) |
+                                            translate}} | #{{order.id}} | {{order.total_toshow}}
+                                        </span>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="d-flex order_info">
+                                <div class="spesh_bar" (click)="toggleOrderExpansion(order)"></div>
+                                <div class="items" (click)="toggleOrderExpansion(order)">
+                                    <h5 *ngFor="let product of order.products">
+                                        <span>{{product?.vendor_product.product.title}} </span>&nbsp;&nbsp;
+
+                                        <strong>x{{product.quantity}}</strong>
+                                    </h5>
+                                </div>
+
+                                <h6 class="end" style="color: tomato;" *ngIf="order.status == 'new' || order.status == 'pending'" (click)="cancelConfirmation(order)">
+                                    {{'cancel' | translate}}
+                                </h6>
+                                <h6 class="end" *ngIf="order.status == 'complete' && !order.reviewed" (click)="navReviewProduct(order)">
+                                    {{'rate_now' | translate}}
+                                </h6>
+                            </div>
+                        </div>
+                    </ion-item>
+                </div>
+            </ion-list>
+            <ion-list *ngIf="isLoading || showDoInfiniteLoading" lines="none">
+                <div *ngFor="let order of [1,2,3,4,5,6,7,8,9]">
+                    <ion-item class="animate__animated animate__fadeInUp">
+                        <div class="item_inner">
+                            <div class="item_info d-flex">
+                                <div class="itme_img center_img">
+                                    <div class="skeleton_img"></div>
+                                </div>
+                                <div class="item_details">
+                                    <h3 class="d-flex">
+                                        <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                                    </h3>
+                                    <h4 class="d-flex">
+                                        <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="d-flex order_info">
+                                <div class="items">
+                                    <h5>
+                                        <ion-skeleton-text animated style="width: 80%"></ion-skeleton-text>
+                                    </h5>
+                                    <h5>
+                                        <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-item>
+                </div>
+            </ion-list>
+            <ion-infinite-scroll *ngIf="!isLoading" (ionInfinite)="doInfinite($event)">
+                <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="{{'loading' | translate}}">
+                </ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+        </ion-slide>
+
+
+        <!-- <ion-slide>
+            <div class="empty-view animate__animated animate__fadeInUp" *ngIf="(!appointments || !appointments.length)">
+                <div style="text-align:center" (click)="alertLogin()">
+                    <img class="light_img" src="assets/images/no_tables.png" alt="no offers" />
+                    <img class="dark_img" src="assets/images/no_tables_dark.png" alt="no offers" />
+                    <ion-spinner *ngIf="isLoadingAppointments" name="crescent"></ion-spinner>
+                    <span *ngIf="userMe" style="color:#9E9E9E; font-weight:bold;">
+                        {{ (isLoadingAppointments ? 'appear_here_appointments' : 'empty_appointments') | translate}}
+                    </span>
+                    <p *ngIf="!userMe" style="color:#9E9E9E; font-weight:bold;" [innerHTML]="'alert_login_msg' | translate"></p>
+                </div>
+            </div>
+            <ion-list class="TableBooking " lines="none">
+                <div *ngFor="let ap of appointments">
+                    <h2 *ngIf="0 > ap.id">{{ap.type | translate}}</h2>
+                    <ion-item *ngIf="ap.id > 0" class="animate__animated animate__fadeInUp">
+                        <div class="item_inner">
+                            <div class="item_info d-flex">
+                                <div class="itme_img center_img">
+                                    <img [src]="ap.vendor.image" class="crop_img">
+                                </div>
+                                <div class="item_details">
+                                    <h3 class="d-flex">
+                                        {{ap.vendor.name}}
+                                        <span class="end">#{{ap.id}} |
+                                        <span [ngClass]="ap.status == 'accepted' ? 'order_status accepted' : 'order_status'">
+                                           {{ ('appointment_status_'+ap.status) | translate}}
+                                        </span></span>
+                                    </h3>
+                                    <h5 class="d-flex">
+                                        <span> {{'booking_for' | translate}}</span> &nbsp; {{ap.date}}, {{ap.time_from}}
+                                        <span class="end">{{ap?.meta?.person}} {{(ap?.meta?.person == 1 ?
+                                            'person'
+                                            :'persons') | translate}}</span>
+                                    </h5>
+                                </div>
+                            </div>
+                        </div>
+                    </ion-item>
+                </div>
+            </ion-list>
+            <ion-infinite-scroll threshold="100px" (ionInfinite)="doInfinite($event)">
+                <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="{{'loading' | translate}}">
+                </ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+        </ion-slide> -->
+    </ion-slides>
+</ion-content>

@@ -1,0 +1,117 @@
+<ion-header class="bg_transparent">
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" icon="chevron-back-outline"></ion-back-button>
+        </ion-buttons>
+        <ion-title>
+            <div class="title_inner d-flex">
+                {{'insight' | translate}}
+                <div class="form end">
+                    <ion-item lines="none">
+                        <div class="item_inner d-flex">
+                            <ion-select class="end" interface="popover" [(ngModel)]="duration" (ionChange)="loadInsight()">
+                                <ion-select-option value="today">{{'today' | translate}}</ion-select-option>
+                                <ion-select-option value="week">{{'weekly' | translate}}</ion-select-option>
+                                <ion-select-option value="month">{{'monthly' | translate}} </ion-select-option>
+                                <ion-select-option value="year">{{'yearly' | translate}}</ion-select-option>
+                            </ion-select>
+
+                            <ion-icon class="zmdi zmdi-caret-down ion-text-end"></ion-icon>
+                        </div>
+                    </ion-item>
+                </div>
+            </div>
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="bg_color" fullscreen>
+
+    <ion-card class="tab animate__animated animate__fadeInUp" style="margin-top: 15px;">
+        <ion-row>
+            <ion-col size="4" [ngClass]="showChartType == 'orders' ? 'ion-text-center active' : 'ion-text-center'" (click)="changeChartType('orders')">
+                <h2>{{insightsOrder.orders}}</h2>
+                <p>{{'orders' | translate}}</p>
+            </ion-col>
+            <ion-col size="4" [ngClass]="showChartType == 'items_sold' ? 'ion-text-center active' : 'ion-text-center'" (click)="changeChartType('items_sold')">
+                <h2>{{insightsOrder.items_sold}}</h2>
+                <p>{{'items_sold' | translate}}</p>
+            </ion-col>
+            <ion-col size="4" [ngClass]="showChartType == 'earnings' ? 'ion-text-center active' : 'ion-text-center'" (click)="changeChartType('earnings')">
+                <h2>{{currency_icon}}{{insightsEarning.total_earnings}}</h2>
+                <p>{{'earnings' | translate}}</p>
+            </ion-col>
+        </ion-row>
+    </ion-card>
+
+    <ion-card class="animate__animated animate__fadeInUp performance_card">
+
+        <div class="card_containt">
+            <h1>{{showChartType | translate}}</h1>
+            <div class="graph_container d-flex">
+                <div class="text_container">
+                    <p *ngFor="let pr of rangeToShow" class="ion-text-end"><span>{{pr}}</span></p>
+                </div>
+                <div class="graph end">
+                    <div *ngFor="let cd of chartDataParsedToShow" class="bar_box">
+                        <h4>{{cd.date}}</h4>
+                        <div class="bar" [style.height]="cd.percent+'%'">
+                            <h5>{{cd.price}}</h5>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <h3 *ngIf="showChartType == 'earnings'" class="ion-text-center" (click)="navTransactions()">
+                {{'view_all_transactions' | translate}}
+            </h3>
+        </div>
+    </ion-card>
+
+
+    <ion-list lines="none">
+        <h2>{{'products_best_seller' | translate}} </h2>
+        <ion-item *ngFor="let product of productsBestSelling" class="animate__animated animate__fadeInUp">
+            <div class="item_inner d-flex">
+                <div class="img_box center_img">
+                    <img [src]="product.image_urls[0]" class="crop_img">
+                </div>
+                <div class="text_box">
+                    <h3>{{product.title}}</h3>
+                    <h4>{{product.sells_count ? product.sells_count : 0}} {{'sales' | translate}}</h4>
+                </div>
+            </div>
+        </ion-item>
+    </ion-list>
+
+    <div *ngIf="feedbackDataParsed">
+        <ion-list class="reviews" lines="none">
+            <h2>
+                {{'reviews' | translate}}
+                <span>{{feedbackDataParsed.total}}</span>
+            </h2>
+            <ion-item *ngFor="let question of feedbackDataParsed.data" class="animate__animated animate__fadeInUp" [ngClass]="questionIdToShow == question.feedback_question_id ? 'active' : ''" (click)="showQuestion(question.feedback_question_id)">
+                <div class="item_inner">
+                    <h3 class="d-flex">{{question.feedback_question_title}}
+                        <span class="end">
+                            <ion-icon
+                                [ngClass]="questionIdToShow == question.feedback_question_id ? 'zmdi zmdi-chevron-up ion-text-end' : 'zmdi zmdi-chevron-down ion-text-end'">
+                            </ion-icon>
+                        </span>
+                    </h3>
+                    <div *ngFor="let option of question.options" class="option_container">
+                        <div class="option d-flex">
+                            <h4>{{option.percent}}%</h4>
+                            <img *ngIf="option.rank == 1" src="assets/images/loved_it.gif">
+                            <img *ngIf="option.rank == 2" src="assets/images/good.gif">
+                            <img *ngIf="option.rank == 3" src="assets/images/average.gif">
+                            <img *ngIf="option.rank == 4" src="assets/images/not_good.gif">
+                            <h5>{{option.title}}</h5>
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+        </ion-list>
+    </div>
+
+</ion-content>

@@ -1,0 +1,9 @@
+{
+    "appName": "Foodoz",
+    "apiBaseUrl": "https://foodoz.vtlabs.dev/api/admin",
+    "mapsApiKey": "AIzaSyBCjJGTp__kOJb2mMUsBeKQkuOlwbiJipQ",
+    "developerName": "Verbose Techlabs LLP",
+    "developerUrl": "http://verbosetechlabs.com/",
+    "defaultCategoryScope": "ecommerce",
+    "defaultBannerScope": "ecommerce"
+}
